@@ -1,5 +1,11 @@
 package modelo;
+import modelo.Mensaje;
 
-public class Cifrado {
+public interface Cifrado {
+	
+	
+  public abstract Mensaje cifrar(Mensaje pMensaje ) ;
+  
+  public abstract Mensaje descifrar(Mensaje pMensaje ) ;
 
 }
