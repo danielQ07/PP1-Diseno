@@ -19,7 +19,7 @@ public class AplPrueba {
     Mensaje mensaje2 = new Mensaje("zorra");
     SustitucionCesar nuevaCesar = new SustitucionCesar();
     System.out.println(mensaje2.getMensajeViejo());
-    nuevaCesar.cifrar(mensaje2, 8);
+    nuevaCesar.cifrar(mensaje2, 26);
     System.out.println(mensaje2.getMensajeCifrado());
     
   }
