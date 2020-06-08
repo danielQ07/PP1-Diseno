@@ -24,7 +24,15 @@ public class SustitucionCesar implements Cifrado {
 		
 		for(char letra: mensajeSeparado) {
 			
-			char letraCifrada = AsciiLetra(LetraAscii(letra)+cantidadPosiciones);
+			int posicionLetraAscii = 0;
+			
+			if(LetraAscii(letra)+cantidadPosiciones > 90){
+				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 90;
+			}else {
+				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones;
+			}
+			
+			char letraCifrada = AsciiLetra(posicionLetraAscii);
 			mensajeCifrado += Character.toString(letraCifrada);
 		}
 		
