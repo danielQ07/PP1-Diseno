@@ -15,8 +15,8 @@ public class SustitucionCesar implements Cifrado {
 		this.cantidadPosiciones = pCantidadPosiciones;
 	}
 	
-	private char AsciiLetra(int numero) {
-		return (char)numero;
+	private String AsciiLetra(int numero) {
+		return Character.toString((char)numero);
 	}
 	
 	
@@ -73,7 +73,7 @@ public class SustitucionCesar implements Cifrado {
 					posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 26;
 				}
 				
-				char letraCifrada = AsciiLetra(posicionLetraAscii);
+				char letraCifrada = AsciiLetra(posicionLetraAscii).charAt(0);
 				mensajeCifrado += Character.toString(letraCifrada);
 			}
 		}
@@ -87,7 +87,30 @@ public class SustitucionCesar implements Cifrado {
 
 	@Override
 	public Mensaje descifrar(Mensaje pMensaje) {
-		return null;
+		char[] mensajeSeparado = pMensaje.getMensajeCifrado().toCharArray();
+		String mensajeDescifrado = "";
+
+		
+		for(char letra: mensajeSeparado) {
+			
+			if(letra == ' '){
+				mensajeDescifrado +=" ";
+			}else {
+			
+				int numeroLetraAscii = LetraAscii(letra)-cantidadPosiciones;
+				
+				if(LetraAscii(letra)-cantidadPosiciones < 65){
+					numeroLetraAscii = LetraAscii(letra)+cantidadPosiciones + 26;
+				}
+				
+				char letraDescifrada = AsciiLetra(numeroLetraAscii).charAt(0);
+				mensajeDescifrado += Character.toString(letraDescifrada);
+			}
+		}
+		
+		pMensaje.setMensajeDescifrado(mensajeDescifrado);
+		
+		return pMensaje;
 	}
 
 }
