@@ -17,9 +17,9 @@ public class AplPrueba {
    
 	  
     Mensaje mensaje2 = new Mensaje("zorra maldita");
-    SustitucionCesar nuevaCesar = new SustitucionCesar();
+    SustitucionCesar nuevaCesar = new SustitucionCesar(8);
     System.out.println(mensaje2.getMensajeViejo());
-    nuevaCesar.cifrar(mensaje2, 10);
+    nuevaCesar.cifrar(mensaje2);
     System.out.println(mensaje2.getMensajeCifrado());
     
   }
