@@ -24,16 +24,19 @@ public class SustitucionCesar implements Cifrado {
 		
 		for(char letra: mensajeSeparado) {
 			
-			int posicionLetraAscii = 0;
-			
-			if(LetraAscii(letra)+cantidadPosiciones > 90){
-				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 26;
+			if(letra == ' '){
+				mensajeCifrado +=" ";
 			}else {
-				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones;
-			}
 			
-			char letraCifrada = AsciiLetra(posicionLetraAscii);
-			mensajeCifrado += Character.toString(letraCifrada);
+				int posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones;
+				
+				if(LetraAscii(letra)+cantidadPosiciones > 90){
+					posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 26;
+				}
+				
+				char letraCifrada = AsciiLetra(posicionLetraAscii);
+				mensajeCifrado += Character.toString(letraCifrada);
+			}
 		}
 		
 		pMensaje.setMensajeCifrado(mensajeCifrado);

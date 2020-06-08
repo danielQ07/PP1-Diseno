@@ -16,10 +16,10 @@ public class AplPrueba {
     System.out.println(mensaje1.getMensajeCifrado());
    
 	  
-    Mensaje mensaje2 = new Mensaje("zorra");
+    Mensaje mensaje2 = new Mensaje("zorra maldita");
     SustitucionCesar nuevaCesar = new SustitucionCesar();
     System.out.println(mensaje2.getMensajeViejo());
-    nuevaCesar.cifrar(mensaje2, 26);
+    nuevaCesar.cifrar(mensaje2, 10);
     System.out.println(mensaje2.getMensajeCifrado());
     
   }
