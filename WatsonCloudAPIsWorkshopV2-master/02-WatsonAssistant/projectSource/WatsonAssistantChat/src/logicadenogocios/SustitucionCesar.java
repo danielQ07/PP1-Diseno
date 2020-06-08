@@ -27,7 +27,7 @@ public class SustitucionCesar implements Cifrado {
 			int posicionLetraAscii = 0;
 			
 			if(LetraAscii(letra)+cantidadPosiciones > 90){
-				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 90;
+				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones - 26;
 			}else {
 				posicionLetraAscii = LetraAscii(letra)+cantidadPosiciones;
 			}
