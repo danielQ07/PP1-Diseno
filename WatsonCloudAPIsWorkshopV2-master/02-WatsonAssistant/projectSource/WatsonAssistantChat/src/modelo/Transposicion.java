@@ -1,7 +1,7 @@
 package modelo;
 import modelo.Cifrado;
 
-public abstract class Transposicion  {
+public abstract class Transposicion implements Cifrado  {
 	
 	public String invertirPalabra (String pTexto ) {
 		
