@@ -1,8 +1,9 @@
 package main;
 
-import modelo.PalabraInversa;
-import modelo.Mensaje;
-import modelo.MensajeInverso;
+import logicadenogocios.Mensaje;
+import logicadenogocios.MensajeInverso;
+import logicadenogocios.PalabraInversa;
+import logicadenogocios.SustitucionCesar;
 
 public class AplPrueba {
 	
@@ -13,7 +14,14 @@ public class AplPrueba {
     
     palabraInversa.cifrar(mensaje1);
     System.out.println(mensaje1.getMensajeCifrado());
+   
 	  
+    Mensaje mensaje2 = new Mensaje("hola");
+    SustitucionCesar nuevaCesar = new SustitucionCesar();
+    System.out.println(mensaje1.getMensajeViejo());
+    nuevaCesar.cifrar(mensaje1, 3);
+    System.out.println(mensaje1.getMensajeCifrado());
+    
   }
 	
 

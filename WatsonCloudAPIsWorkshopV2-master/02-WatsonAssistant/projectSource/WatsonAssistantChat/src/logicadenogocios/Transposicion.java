@@ -1,5 +1,5 @@
-package modelo;
-import modelo.Cifrado;
+package logicadenogocios;
+import logicadenogocios.Cifrado;
 
 public abstract class Transposicion implements Cifrado  {
 	

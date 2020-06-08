@@ -1,5 +1,5 @@
-package modelo;
-import modelo.Mensaje;
+package logicadenogocios;
+import logicadenogocios.Mensaje;
 
 public interface Cifrado {
 	

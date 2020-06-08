@@ -1,6 +1,6 @@
-package modelo;
-import modelo.Mensaje;
-import modelo.Transposicion;
+package logicadenogocios;
+import logicadenogocios.Mensaje;
+import logicadenogocios.Transposicion;
 
 public class PalabraInversa extends Transposicion {
 	

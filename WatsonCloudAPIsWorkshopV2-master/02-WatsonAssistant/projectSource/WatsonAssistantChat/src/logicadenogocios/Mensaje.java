@@ -1,10 +1,9 @@
-package modelo;
+package logicadenogocios;
 
 public class Mensaje {
 	
   private String mensajeViejo;
   private String mensajeCifrado;
-  private String mensajeDescifrado;
   
   
   public Mensaje(String pMensajeViejo) {
@@ -27,17 +26,6 @@ public class Mensaje {
 	  
 	  mensajeCifrado = pMensajeCifrado; 
   }
-  
-  public void setMensajeDescifrado(String pMensajeDescifrado) {
-	  
-	  mensajeDescifrado = pMensajeDescifrado; 
-  }
-  
-  public String getMensajeDescifrado() {
-
-    return mensajeDescifrado;
-  }
-  
   
 
 }
