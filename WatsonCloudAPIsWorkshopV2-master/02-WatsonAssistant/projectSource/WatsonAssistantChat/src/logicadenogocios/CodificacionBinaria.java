@@ -1,5 +1,4 @@
 package logicadenogocios;
-import logicadenogocios.Mensaje;
 import util.ConversionAscii;
 
 public class CodificacionBinaria {
@@ -31,7 +30,7 @@ public class CodificacionBinaria {
 		valorNumerico += Character.getNumericValue(pTexto.charAt(contador)) *valorLetra;
 		valorLetra = valorLetra / 2;
 	  }
-	  return ConversionAscii.AsciiLetra(valorNumerico+97);
+	  return ConversionAscii.asciiLetra(valorNumerico+97);
 	} 
 	
 	

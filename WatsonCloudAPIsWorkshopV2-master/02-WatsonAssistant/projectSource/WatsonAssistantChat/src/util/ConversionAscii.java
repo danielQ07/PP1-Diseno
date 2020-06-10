@@ -2,12 +2,12 @@ package util;
 
 public class ConversionAscii {
 
-	public static char AsciiLetra(int pNumero) {
+	public static char asciiLetra(int pNumero) {
 		return (char)pNumero;
 	}
 	
 	
-	public static int LetraAscii(Character pLetra) {
+	public static int letraAscii(char pLetra) {
 		pLetra = Character.toUpperCase(pLetra);
 		return (int)pLetra;
 	}

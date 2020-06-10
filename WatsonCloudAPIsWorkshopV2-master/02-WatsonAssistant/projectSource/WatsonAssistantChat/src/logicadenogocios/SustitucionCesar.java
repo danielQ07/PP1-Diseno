@@ -23,11 +23,11 @@ public class SustitucionCesar implements Cifrado {
 				mensajeCifrado +=" ";
 			}else {
 			
-				int posicionLetraAscii = ConversionAscii.LetraAscii(letra)+cantidadPosiciones;
+				int posicionLetraAscii = ConversionAscii.letraAscii(letra)+cantidadPosiciones;
 				
 				posicionLetraAscii = validarAsciiLetra(letra,posicionLetraAscii);
 				
-				char letraCifrada = ConversionAscii.AsciiLetra(posicionLetraAscii);
+				char letraCifrada = ConversionAscii.asciiLetra(posicionLetraAscii);
 				
 				mensajeCifrado += validarCaps(letra,letraCifrada);
 				
@@ -52,11 +52,11 @@ public class SustitucionCesar implements Cifrado {
 				mensajeDescifrado +=" ";
 			}else {
 			
-				int numeroLetraAscii = ConversionAscii.LetraAscii(letra)-cantidadPosiciones;
+				int numeroLetraAscii = ConversionAscii.letraAscii(letra)-cantidadPosiciones;
 				
 				numeroLetraAscii = validarLetraAscii(letra,numeroLetraAscii);
 				
-				char letraDescifrada = ConversionAscii.AsciiLetra(numeroLetraAscii);
+				char letraDescifrada = ConversionAscii.asciiLetra(numeroLetraAscii);
 				
 				mensajeDescifrado += validarCaps(letra,letraDescifrada);
 				
@@ -75,14 +75,14 @@ public class SustitucionCesar implements Cifrado {
 		return pLetraEncriptada;
 	}
 	private int validarLetraAscii(char pLetra, int pNumeroLetraAscii) {
-		if(ConversionAscii.LetraAscii(pLetra)-cantidadPosiciones < 65){
-			return (pNumeroLetraAscii = ConversionAscii.LetraAscii(pLetra)-cantidadPosiciones + 26);
+		if(ConversionAscii.letraAscii(pLetra)-cantidadPosiciones < 65){
+			return (pNumeroLetraAscii = ConversionAscii.letraAscii(pLetra)-cantidadPosiciones + 26);
 		}
 		return pNumeroLetraAscii;
 	}
 	private int validarAsciiLetra(char pLetra, int pNumeroAsciiLetra) {
-		if(ConversionAscii.LetraAscii(pLetra)+cantidadPosiciones > 90){
-			pNumeroAsciiLetra = ConversionAscii.LetraAscii(pLetra)+cantidadPosiciones - 26;
+		if(ConversionAscii.letraAscii(pLetra)+cantidadPosiciones > 90){
+			pNumeroAsciiLetra = ConversionAscii.letraAscii(pLetra)+cantidadPosiciones - 26;
 		}
 		return pNumeroAsciiLetra;
 	}

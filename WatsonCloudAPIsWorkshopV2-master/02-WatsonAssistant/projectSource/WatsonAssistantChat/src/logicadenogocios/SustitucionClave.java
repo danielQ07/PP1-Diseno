@@ -7,7 +7,6 @@ import util.ConversionAscii;
 public abstract class SustitucionClave implements Cifrado {
 	
 	protected ArrayList<Character> alfabeto = asignarAlfabeto();
-	
 	private ArrayList<Character> asignarAlfabeto(){
 		
 		ArrayList<Character> alfabeto = new ArrayList<Character>();
@@ -17,7 +16,7 @@ public abstract class SustitucionClave implements Cifrado {
 		int contador = 65;
 		while(contador < 91) {
 			
-			Character letra = ConversionAscii.AsciiLetra(contador);
+			Character letra = ConversionAscii.asciiLetra(contador);
 			alfabeto.add(letra);
 			contador++;
 		}
