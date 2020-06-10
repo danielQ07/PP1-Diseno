@@ -17,7 +17,7 @@ public abstract class SustitucionClave implements Cifrado {
 		int contador = 65;
 		while(contador < 91) {
 			
-			Character letra = ConversionAscii.AsciiLetra(contador).charAt(0);
+			Character letra = ConversionAscii.AsciiLetra(contador);
 			alfabeto.add(letra);
 			contador++;
 		}

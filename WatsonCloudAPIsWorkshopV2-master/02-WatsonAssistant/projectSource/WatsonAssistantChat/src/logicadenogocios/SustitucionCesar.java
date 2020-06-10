@@ -37,7 +37,7 @@ public class SustitucionCesar implements Cifrado {
 					posicionLetraAscii = ConversionAscii.LetraAscii(letra)+cantidadPosiciones - 26;
 				}
 				
-				char letraCifrada = ConversionAscii.AsciiLetra(posicionLetraAscii).charAt(0);
+				char letraCifrada = ConversionAscii.AsciiLetra(posicionLetraAscii);
 				mensajeCifrado += Character.toString(letraCifrada);
 			}
 		}
@@ -64,10 +64,10 @@ public class SustitucionCesar implements Cifrado {
 				int numeroLetraAscii = ConversionAscii.LetraAscii(letra)-cantidadPosiciones;
 				
 				if(ConversionAscii.LetraAscii(letra)-cantidadPosiciones < 65){
-					numeroLetraAscii = ConversionAscii.LetraAscii(letra)+cantidadPosiciones + 26;
+					numeroLetraAscii = ConversionAscii.LetraAscii(letra)-cantidadPosiciones + 26;
 				}
 				
-				char letraDescifrada = ConversionAscii.AsciiLetra(numeroLetraAscii).charAt(0);
+				char letraDescifrada = ConversionAscii.AsciiLetra(numeroLetraAscii);
 				mensajeDescifrado += Character.toString(letraDescifrada);
 			}
 		}

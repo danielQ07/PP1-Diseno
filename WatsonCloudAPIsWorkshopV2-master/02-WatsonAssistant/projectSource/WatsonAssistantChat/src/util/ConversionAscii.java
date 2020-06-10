@@ -2,8 +2,8 @@ package util;
 
 public class ConversionAscii {
 
-	public static String AsciiLetra(int numero) {
-		return Character.toString((char)numero);
+	public static char AsciiLetra(int numero) {
+		return (char)numero;
 	}
 	
 	
