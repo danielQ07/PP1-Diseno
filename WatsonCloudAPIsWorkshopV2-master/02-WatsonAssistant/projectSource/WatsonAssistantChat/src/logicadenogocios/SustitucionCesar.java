@@ -38,7 +38,13 @@ public class SustitucionCesar implements Cifrado {
 				}
 				
 				char letraCifrada = ConversionAscii.AsciiLetra(posicionLetraAscii);
-				mensajeCifrado += Character.toString(letraCifrada);
+				
+				if(Character.isLowerCase(letra)) {
+					mensajeCifrado += Character.toString(letraCifrada).toLowerCase();
+				}else {
+					mensajeCifrado += Character.toString(letraCifrada);
+				}
+				
 			}
 		}
 		
@@ -68,7 +74,13 @@ public class SustitucionCesar implements Cifrado {
 				}
 				
 				char letraDescifrada = ConversionAscii.AsciiLetra(numeroLetraAscii);
-				mensajeDescifrado += Character.toString(letraDescifrada);
+				
+				if(Character.isLowerCase(letra)) {
+					mensajeDescifrado += Character.toString(letraDescifrada).toLowerCase();
+				}else {
+					mensajeDescifrado += Character.toString(letraDescifrada);
+				}
+				
 			}
 		}
 		

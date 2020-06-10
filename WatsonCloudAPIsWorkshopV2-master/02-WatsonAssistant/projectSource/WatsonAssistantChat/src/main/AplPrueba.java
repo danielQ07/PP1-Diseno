@@ -20,7 +20,7 @@ public class AplPrueba {
     palabraInversa.descifrar(mensaje1);
    
 	  
-    Mensaje mensaje2 = new Mensaje("viva la vida");
+    Mensaje mensaje2 = new Mensaje("Viva la Vida");
     SustitucionCesar nuevaCesar = new SustitucionCesar(8);
     System.out.println(mensaje2.getMensajeViejo());
     nuevaCesar.cifrar(mensaje2);
@@ -29,7 +29,7 @@ public class AplPrueba {
     System.out.println(mensaje2.getMensajeDescifrado());
     
 
-    Mensaje mensaje3 = new Mensaje("tarea programada de codificacion");
+    Mensaje mensaje3 = new Mensaje("Tarea Programada de Codificacion");
     PorLlave nueva3 = new PorLlave("tango");
     System.out.println("---------------separador-----------------");
     System.out.println(mensaje3.getMensajeViejo());

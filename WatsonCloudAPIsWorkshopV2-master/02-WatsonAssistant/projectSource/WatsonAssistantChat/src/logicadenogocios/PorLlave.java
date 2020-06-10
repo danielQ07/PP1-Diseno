@@ -47,7 +47,12 @@ public class PorLlave extends SustitucionClave {
 				char letraEncriptada = alfabeto.get(valorLetraEcriptada);
 				
 				
-				mensajeEncriptado += letraEncriptada;
+				if(Character.isLowerCase(letra)) {
+					mensajeEncriptado += Character.toString(letraEncriptada).toLowerCase();
+				}else {
+					mensajeEncriptado += Character.toString(letraEncriptada);
+				}
+				
 				
 				contadorPalabraClave++;
 				
@@ -79,7 +84,7 @@ public class PorLlave extends SustitucionClave {
 					contadorPalabraClave = 0;
 				}
 				
-				int indexLetraEncriptada = alfabeto.indexOf(letra);
+				int indexLetraEncriptada = alfabeto.indexOf(Character.toUpperCase(letra));
 				
 				char letraPalabraClave = clave[contadorPalabraClave];
 				
@@ -96,7 +101,12 @@ public class PorLlave extends SustitucionClave {
 				char letraDesencriptada = alfabeto.get(sumaEncriptada);
 				
 				
-				mensajeDesencriptado += letraDesencriptada;
+				if(Character.isLowerCase(letra)) {
+					mensajeDesencriptado += Character.toString(letraDesencriptada).toLowerCase();
+				}else {
+					mensajeDesencriptado += Character.toString(letraDesencriptada);
+				}
+				
 				contadorPalabraClave++;
 				
 			}
