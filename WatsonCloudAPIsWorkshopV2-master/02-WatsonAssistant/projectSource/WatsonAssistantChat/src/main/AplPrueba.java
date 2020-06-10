@@ -1,12 +1,10 @@
 package main;
-import java.lang.*;
-import java.io.*;
 
 import logicadenogocios.Mensaje;
-import logicadenogocios.MensajeInverso;
 import logicadenogocios.PalabraInversa;
 import logicadenogocios.PorLlave;
 import logicadenogocios.SustitucionCesar;
+import logicadenogocios.Vigenere;
 
 public class AplPrueba {
 	
@@ -37,6 +35,14 @@ public class AplPrueba {
     System.out.println(mensaje3.getMensajeCifrado());
     nueva3.descifrar(mensaje3);
     System.out.println(mensaje3.getMensajeDescifrado());
+    
+    Mensaje mensaje4 = new Mensaje("Tarea Programada criptografia de datos");
+    Vigenere nueva4 = new Vigenere(23);
+    System.out.println(mensaje4.getMensajeViejo());
+    nueva4.cifrar(mensaje4);
+    System.out.println(mensaje4.getMensajeCifrado());
+    nueva4.descifrar(mensaje4);
+    System.out.println(mensaje4.getMensajeDescifrado());
     
   }
 

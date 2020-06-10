@@ -1,22 +1,14 @@
 package logicadenogocios;
 
-import java.util.ArrayList;
-
 import util.ConversionAscii;
 
 public class SustitucionCesar implements Cifrado {
 	
-	
 	private int cantidadPosiciones;
-	
-	public SustitucionCesar() {
-		
-	}
 	
 	public SustitucionCesar(int pCantidadPosiciones) {
 		this.cantidadPosiciones = pCantidadPosiciones;
 	}
-	
 	
 	@Override
 	public Mensaje cifrar(Mensaje pMensaje) {
@@ -33,17 +25,11 @@ public class SustitucionCesar implements Cifrado {
 			
 				int posicionLetraAscii = ConversionAscii.LetraAscii(letra)+cantidadPosiciones;
 				
-				if(ConversionAscii.LetraAscii(letra)+cantidadPosiciones > 90){
-					posicionLetraAscii = ConversionAscii.LetraAscii(letra)+cantidadPosiciones - 26;
-				}
+				posicionLetraAscii = validarAsciiLetra(letra,posicionLetraAscii);
 				
 				char letraCifrada = ConversionAscii.AsciiLetra(posicionLetraAscii);
 				
-				if(Character.isLowerCase(letra)) {
-					mensajeCifrado += Character.toString(letraCifrada).toLowerCase();
-				}else {
-					mensajeCifrado += Character.toString(letraCifrada);
-				}
+				mensajeCifrado += validarCaps(letra,letraCifrada);
 				
 			}
 		}
@@ -53,9 +39,8 @@ public class SustitucionCesar implements Cifrado {
 		return pMensaje;
 			
 	}
-
-
 	@Override
+	
 	public Mensaje descifrar(Mensaje pMensaje) {
 		char[] mensajeSeparado = pMensaje.getMensajeCifrado().toCharArray();
 		String mensajeDescifrado = "";
@@ -69,17 +54,11 @@ public class SustitucionCesar implements Cifrado {
 			
 				int numeroLetraAscii = ConversionAscii.LetraAscii(letra)-cantidadPosiciones;
 				
-				if(ConversionAscii.LetraAscii(letra)-cantidadPosiciones < 65){
-					numeroLetraAscii = ConversionAscii.LetraAscii(letra)-cantidadPosiciones + 26;
-				}
+				numeroLetraAscii = validarLetraAscii(letra,numeroLetraAscii);
 				
 				char letraDescifrada = ConversionAscii.AsciiLetra(numeroLetraAscii);
 				
-				if(Character.isLowerCase(letra)) {
-					mensajeDescifrado += Character.toString(letraDescifrada).toLowerCase();
-				}else {
-					mensajeDescifrado += Character.toString(letraDescifrada);
-				}
+				mensajeDescifrado += validarCaps(letra,letraDescifrada);
 				
 			}
 		}
@@ -88,5 +67,24 @@ public class SustitucionCesar implements Cifrado {
 		
 		return pMensaje;
 	}
-
+	private char validarCaps(char pLetraActual,char pLetraEncriptada) {
+		if(Character.isLowerCase(pLetraActual)) {
+			pLetraEncriptada = Character.toLowerCase(pLetraEncriptada);
+			return pLetraEncriptada;
+		}
+		return pLetraEncriptada;
+	}
+	private int validarLetraAscii(char pLetra, int pNumeroLetraAscii) {
+		if(ConversionAscii.LetraAscii(pLetra)-cantidadPosiciones < 65){
+			return (pNumeroLetraAscii = ConversionAscii.LetraAscii(pLetra)-cantidadPosiciones + 26);
+		}
+		return pNumeroLetraAscii;
+	}
+	private int validarAsciiLetra(char pLetra, int pNumeroAsciiLetra) {
+		if(ConversionAscii.LetraAscii(pLetra)+cantidadPosiciones > 90){
+			pNumeroAsciiLetra = ConversionAscii.LetraAscii(pLetra)+cantidadPosiciones - 26;
+		}
+		return pNumeroAsciiLetra;
+	}
+	
 }

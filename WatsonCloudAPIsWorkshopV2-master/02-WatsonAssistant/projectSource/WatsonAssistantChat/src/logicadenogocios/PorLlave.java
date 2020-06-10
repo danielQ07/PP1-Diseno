@@ -1,9 +1,5 @@
 package logicadenogocios;
 
-import java.util.ArrayList;
-
-import util.ConversionAscii;
-
 public class PorLlave extends SustitucionClave {
 	
 	private char[] clave;
@@ -25,12 +21,10 @@ public class PorLlave extends SustitucionClave {
 			if(letra == ' ') {
 				contadorPalabraClave = 0;
 				mensajeEncriptado += " ";
+				
 			}else{
 				
-				if(contadorPalabraClave == clave.length){
-					contadorPalabraClave = 0;
-				}
-				
+				contadorPalabraClave = resetPosicionPalabraClave(contadorPalabraClave);
 
 				int indexletra = alfabeto.indexOf(Character.toUpperCase(letra));
 				
@@ -40,32 +34,19 @@ public class PorLlave extends SustitucionClave {
 				
 				int valorLetraEcriptada = indexLetraClave+indexletra;
 				
-				if(valorLetraEcriptada > 26) {
-					valorLetraEcriptada -= 26;
-				}
+				valorLetraEcriptada = validarLetraEncriptada(valorLetraEcriptada);
 				
-				char letraEncriptada = alfabeto.get(valorLetraEcriptada);
-				
-				
-				if(Character.isLowerCase(letra)) {
-					mensajeEncriptado += Character.toString(letraEncriptada).toLowerCase();
-				}else {
-					mensajeEncriptado += Character.toString(letraEncriptada);
-				}
-				
+				mensajeEncriptado += validarCaps(letra,alfabeto.get(valorLetraEcriptada));
 				
 				contadorPalabraClave++;
 				
 			}
-			
 		}
 		
 		pMensaje.setMensajeCifrado(mensajeEncriptado);
-		
 		return pMensaje;
 		
 	}
-
 	@Override
 	public Mensaje descifrar(Mensaje pMensaje) {
 		String mensajeDesencriptado = "";
@@ -80,9 +61,7 @@ public class PorLlave extends SustitucionClave {
 				mensajeDesencriptado += " ";
 			}else{
 				
-				if(contadorPalabraClave == clave.length){
-					contadorPalabraClave = 0;
-				}
+				contadorPalabraClave = resetPosicionPalabraClave(contadorPalabraClave);
 				
 				int indexLetraEncriptada = alfabeto.indexOf(Character.toUpperCase(letra));
 				
@@ -92,20 +71,9 @@ public class PorLlave extends SustitucionClave {
 				
 				int sumaEncriptada = indexLetraEncriptada - indexLetraClave;
 				
+				sumaEncriptada = validarLetraDesencriptada(sumaEncriptada);
 				
-				if(sumaEncriptada < 0) {
-					sumaEncriptada += 26;
-				}
-				
-				
-				char letraDesencriptada = alfabeto.get(sumaEncriptada);
-				
-				
-				if(Character.isLowerCase(letra)) {
-					mensajeDesencriptado += Character.toString(letraDesencriptada).toLowerCase();
-				}else {
-					mensajeDesencriptado += Character.toString(letraDesencriptada);
-				}
+				mensajeDesencriptado += validarCaps(letra,alfabeto.get(sumaEncriptada));
 				
 				contadorPalabraClave++;
 				
@@ -117,11 +85,33 @@ public class PorLlave extends SustitucionClave {
 		
 		return pMensaje;
 	}
-	
-	private int posicionLetra(Character letra) {
-		
-		return ConversionAscii.LetraAscii(letra);
-
+	private int resetPosicionPalabraClave(int pContadorPalabraClave) {
+		if(pContadorPalabraClave == clave.length){
+			pContadorPalabraClave = 0;
+			return pContadorPalabraClave;
+		}
+		return pContadorPalabraClave;
+	}
+	private char validarCaps(char pLetraActual,char pLetraEncriptada) {
+		if(Character.isLowerCase(pLetraActual)) {
+			pLetraEncriptada = Character.toLowerCase(pLetraEncriptada);
+			return pLetraEncriptada;
+		}
+		return pLetraEncriptada;
+	}
+	private int validarLetraEncriptada(int pValorLetraEcriptada) {
+		if(pValorLetraEcriptada > 26) {
+			pValorLetraEcriptada -= 26;
+			return pValorLetraEcriptada;
+		}
+		return pValorLetraEcriptada;
+	}
+	private int validarLetraDesencriptada(int pValorLetraDesecriptada) {
+		if(pValorLetraDesecriptada < 0) {
+			pValorLetraDesecriptada += 26;
+			return pValorLetraDesecriptada;
+		}
+		return pValorLetraDesecriptada;
 	}
 	
 }
