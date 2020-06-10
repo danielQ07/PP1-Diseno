@@ -3,7 +3,7 @@ import logicadenogocios.Cifrado;
 
 public abstract class Transposicion implements Cifrado  {
 	
-	public String invertirPalabra (String pTexto ) {
+	protected String invertirPalabra (String pTexto ) {
 		
       String palabraInvertida = "";
       	
@@ -13,9 +13,7 @@ public abstract class Transposicion implements Cifrado  {
       	
       return palabraInvertida;
 		
-		
 	}
-	
 
 }
 	

@@ -24,5 +24,11 @@ public abstract class SustitucionClave implements Cifrado {
 		
 		return alfabeto;
 	}
-
+	protected char validarCaps(char pLetraActual,char pLetraEncriptada) {
+		if(Character.isLowerCase(pLetraActual)) {
+			pLetraEncriptada = Character.toLowerCase(pLetraEncriptada);
+			return pLetraEncriptada;
+		}
+		return pLetraEncriptada;
+	}
 }

@@ -40,10 +40,10 @@ public class Vigenere extends SustitucionClave {
 		return pMensaje;
 	}
 	@Override
-	public Mensaje descifrar(Mensaje pMensaje) {
+	public Mensaje descifrar(Mensaje pMensajeCifrado) {
 		
 		String mensajeDesencriptado = "";
-		char[] mensajeSeparado = pMensaje.getMensajeCifrado().toCharArray();
+		char[] mensajeSeparado = pMensajeCifrado.getMensajeCifrado().toCharArray();
 		int posicionCifra = 1;
 		
 		for(char letra: mensajeSeparado) {
@@ -65,16 +65,9 @@ public class Vigenere extends SustitucionClave {
 			}
 		}
 		
-		pMensaje.setMensajeDescifrado(mensajeDesencriptado);
-		return pMensaje;
+		pMensajeCifrado.setMensajeDescifrado(mensajeDesencriptado);
+		return pMensajeCifrado;
 		
-	}
-	private char validarCaps(char pLetraActual,char pLetraEncriptada) {
-		if(Character.isLowerCase(pLetraActual)) {
-			pLetraEncriptada = Character.toLowerCase(pLetraEncriptada);
-			return pLetraEncriptada;
-		}
-		return pLetraEncriptada;
 	}
 	private int validarTamanoEncriptar(int pIndexLetraEncriptada) {
 		if(pIndexLetraEncriptada < 26) {

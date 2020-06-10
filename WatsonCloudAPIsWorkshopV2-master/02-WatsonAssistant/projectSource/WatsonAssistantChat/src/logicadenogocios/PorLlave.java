@@ -92,13 +92,6 @@ public class PorLlave extends SustitucionClave {
 		}
 		return pContadorPalabraClave;
 	}
-	private char validarCaps(char pLetraActual,char pLetraEncriptada) {
-		if(Character.isLowerCase(pLetraActual)) {
-			pLetraEncriptada = Character.toLowerCase(pLetraEncriptada);
-			return pLetraEncriptada;
-		}
-		return pLetraEncriptada;
-	}
 	private int validarLetraEncriptada(int pValorLetraEcriptada) {
 		if(pValorLetraEcriptada > 26) {
 			pValorLetraEcriptada -= 26;
