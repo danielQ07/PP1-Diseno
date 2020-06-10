@@ -31,6 +31,7 @@ public class PorLlave extends SustitucionClave {
 					contadorPalabraClave = 0;
 				}
 				
+
 				int indexletra = alfabeto.indexOf(Character.toUpperCase(letra));
 				
 				char letraPalabraClave = clave[contadorPalabraClave];
@@ -62,7 +63,49 @@ public class PorLlave extends SustitucionClave {
 
 	@Override
 	public Mensaje descifrar(Mensaje pMensaje) {
-		return null;
+		String mensajeDesencriptado = "";
+		char[] mensajeSeparado = pMensaje.getMensajeCifrado().toCharArray();
+		
+		int contadorPalabraClave = 0;
+		
+		for(char letra: mensajeSeparado) {
+			
+			if(letra == ' ') {
+				contadorPalabraClave = 0;
+				mensajeDesencriptado += " ";
+			}else{
+				
+				if(contadorPalabraClave == clave.length){
+					contadorPalabraClave = 0;
+				}
+				
+				int indexLetraEncriptada = alfabeto.indexOf(letra);
+				
+				char letraPalabraClave = clave[contadorPalabraClave];
+				
+				int indexLetraClave = alfabeto.indexOf(Character.toUpperCase(letraPalabraClave));
+				
+				int sumaEncriptada = indexLetraEncriptada - indexLetraClave;
+				
+				
+				if(sumaEncriptada < 0) {
+					sumaEncriptada += 26;
+				}
+				
+				
+				char letraDesencriptada = alfabeto.get(sumaEncriptada);
+				
+				
+				mensajeDesencriptado += letraDesencriptada;
+				contadorPalabraClave++;
+				
+			}
+			
+		}
+		
+		pMensaje.setMensajeDescifrado(mensajeDesencriptado);
+		
+		return pMensaje;
 	}
 	
 	private int posicionLetra(Character letra) {

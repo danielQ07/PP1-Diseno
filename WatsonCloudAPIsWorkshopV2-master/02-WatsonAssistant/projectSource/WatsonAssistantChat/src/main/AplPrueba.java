@@ -31,11 +31,12 @@ public class AplPrueba {
 
     Mensaje mensaje3 = new Mensaje("tarea programada de codificacion");
     PorLlave nueva3 = new PorLlave("tango");
-    System.out.println(nueva3.alfabeto);
     System.out.println("---------------separador-----------------");
     System.out.println(mensaje3.getMensajeViejo());
     nueva3.cifrar(mensaje3);
     System.out.println(mensaje3.getMensajeCifrado());
+    nueva3.descifrar(mensaje3);
+    System.out.println(mensaje3.getMensajeDescifrado());
     
   }
 

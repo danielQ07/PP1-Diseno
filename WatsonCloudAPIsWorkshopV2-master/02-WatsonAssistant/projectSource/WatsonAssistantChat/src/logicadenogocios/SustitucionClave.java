@@ -6,7 +6,7 @@ import util.ConversionAscii;
 
 public abstract class SustitucionClave implements Cifrado {
 	
-	public ArrayList<Character> alfabeto = asignarAlfabeto();
+	protected ArrayList<Character> alfabeto = asignarAlfabeto();
 	
 	private ArrayList<Character> asignarAlfabeto(){
 		
