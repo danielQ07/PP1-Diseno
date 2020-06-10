@@ -7,6 +7,7 @@ import logicadenogocios.MensajeInverso;
 import logicadenogocios.PalabraInversa;
 import logicadenogocios.PorLlave;
 import logicadenogocios.SustitucionCesar;
+import logicadenogocios.CodificacionBinaria;
 
 public class AplPrueba {
 	
@@ -38,12 +39,13 @@ public class AplPrueba {
     nueva3.descifrar(mensaje3);
     System.out.println(mensaje3.getMensajeDescifrado());
     
+    Mensaje mensaje4 = new Mensaje("tarea programada");
+    CodificacionBinaria nuevaBinario = new CodificacionBinaria();
+    System.out.println(nuevaBinario.cifrar(mensaje4));
+    
   }
 
-   /* String texto = "10001";
-	int integer = Integer.parseInt(texto);
-	String textoFinal = Integer.toBinaryString(integer);
-	System.out.println("Binario:::  "+ textoFinal);*/
+
   }	
 
 	
