@@ -1,14 +1,16 @@
 package logicadenogocios;
+import logicadenogocios.Mensaje;
+import util.ConversionAscii;
 
-public class codificacionBinaria {
+public class CodificacionBinaria {
 	
-	public String cifrar(String pTexto) {
-	  return textoBinario(pTexto);		
+	public String cifrar(Mensaje pMensaje) {
+	  return textoBinario(pMensaje.getMensajeViejo());		
 	}
 	
 	
-	public String descifrar(String pTexto) {
-	  return binarioTexto(pTexto);			  
+	public String descifrar(Mensaje pMensaje) {
+	  return binarioTexto(pMensaje.getMensajeViejo());			  
 	}
 	
 	private String cambiarCaracterBinario(int pValorLetra) {		
@@ -29,8 +31,8 @@ public class codificacionBinaria {
 		valorNumerico += Character.getNumericValue(pTexto.charAt(contador)) *valorLetra;
 		valorLetra = valorLetra / 2;
 	  }
-	  return AsciiLetra(valorNumerico+97);
-	}
+	  return ConversionAscii.AsciiLetra(valorNumerico+97);
+	} 
 	
 	
 	private char validarEspacioBlanco(String pTexto) {
@@ -43,7 +45,6 @@ public class codificacionBinaria {
 	
 	
 	private String validarCambioBinario(String pLetraConvertida) {
-		
 	  if(pLetraConvertida.length() == 5) {
 		return pLetraConvertida;  
 	  } else {
@@ -54,8 +55,8 @@ public class codificacionBinaria {
 	  return pLetraConvertida;  
 	}
 	
-	private String textoBinario(String texto){
-      byte[] listaBytes = texto.getBytes();
+	private String textoBinario(String pTexto){
+      byte[] listaBytes = pTexto.getBytes();
       String textoCifrado = "";
       for (byte byteActual : listaBytes){
 	     textoCifrado += cambiarCaracterBinario(byteActual)+" ";
@@ -63,30 +64,15 @@ public class codificacionBinaria {
 	  return textoCifrado;
 	}
 	  
-	private String binarioTexto(String texto) {
+	private String binarioTexto(String pTexto) {
       String textoCifrado = "";
-      String[] textoSeparado = texto.split(" ");
+      String[] textoSeparado = pTexto.split(" ");
       for (String separadoActual : textoSeparado) {
         textoCifrado += validarEspacioBlanco(separadoActual);
       }
       return textoCifrado;
 	}
 	
-
-	
-	private char AsciiLetra(int numero) {
-	  return (char) numero;
-	}
-	
-	
-	private int LetraAscii(Character letra) {
-	  letra = Character.toUpperCase(letra);
-	  return (int)letra;
-	}
-	
-	
-	
-  	
   	
 
 }
