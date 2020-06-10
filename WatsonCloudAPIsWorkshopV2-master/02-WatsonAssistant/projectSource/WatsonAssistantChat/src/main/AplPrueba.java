@@ -1,4 +1,6 @@
 package main;
+import java.lang.*;
+import java.io.*;
 
 import logicadenogocios.Mensaje;
 import logicadenogocios.MensajeInverso;
@@ -14,6 +16,7 @@ public class AplPrueba {
     
     palabraInversa.cifrar(mensaje1);
     System.out.println(mensaje1.getMensajeCifrado());
+    palabraInversa.descifrar(mensaje1);
    
 	  
     Mensaje mensaje2 = new Mensaje("viva la vida");
@@ -24,7 +27,11 @@ public class AplPrueba {
     nuevaCesar.descifrar(mensaje2);
     System.out.println(mensaje2.getMensajeDescifrado());
     
-  }
+   /* String texto = "10001";
+	int integer = Integer.parseInt(texto);
+	String textoFinal = Integer.toBinaryString(integer);
+	System.out.println("Binario:::  "+ textoFinal);*/
+  }	
 	
 
 }
