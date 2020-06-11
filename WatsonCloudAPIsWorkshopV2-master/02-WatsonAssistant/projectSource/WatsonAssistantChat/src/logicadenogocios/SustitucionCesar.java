@@ -2,7 +2,7 @@ package logicadenogocios;
 
 import util.ConversionAscii;
 
-public class SustitucionCesar implements Cifrado {
+public class SustitucionCesar implements ICifrado {
 	
 	private int cantidadPosiciones;
 	

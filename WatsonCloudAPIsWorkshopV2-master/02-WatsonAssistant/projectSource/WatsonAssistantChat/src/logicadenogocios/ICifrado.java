@@ -1,7 +1,7 @@
 package logicadenogocios;
 import logicadenogocios.Mensaje;
 
-public interface Cifrado {
+public interface ICifrado {
 	
 	
   public abstract Mensaje cifrar(Mensaje pMensaje ) ;

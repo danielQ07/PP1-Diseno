@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import util.ConversionAscii;
 
-public class CodigoTelefonico implements Cifrado{
+public class CodigoTelefonico implements ICifrado{
 
 	public ArrayList<ArrayList<Character>> alfabeto = asignarAlfabeto();
 	
@@ -42,17 +42,6 @@ public class CodigoTelefonico implements Cifrado{
 		pMensaje.setMensajeDescifrado(mensajeDesencriptado);
 		return pMensaje;
 	}	
-	private String desEncriptarLetra(String pLetra) {
-		
-		String mensajefinal = "";
-
-		if(!pLetra.equals("*")) {
-			String[] numerosStr = pLetra.split("");
-			return (mensajefinal += alfabeto.get(Integer.parseInt(numerosStr[0])-2).get(Integer.parseInt(numerosStr[1])-1));
-		}
-		
-		return (mensajefinal = " ");
-	}
 	private ArrayList<ArrayList<Character>> asignarAlfabeto() {
 		
 		ArrayList<ArrayList<Character>> alfabeto = new ArrayList<ArrayList<Character>>();
@@ -76,6 +65,17 @@ public class CodigoTelefonico implements Cifrado{
 		}
 
 		return alfabeto;
+	}
+	private String desEncriptarLetra(String pLetra) {
+		
+		String mensajefinal = "";
+
+		if(!pLetra.equals("*")) {
+			String[] numerosStr = pLetra.split("");
+			return (mensajefinal += alfabeto.get(Integer.parseInt(numerosStr[0])-2).get(Integer.parseInt(numerosStr[1])-1));
+		}
+		
+		return (mensajefinal = " ");
 	}
 	private int determinarCondicionParada(int pContadorNumeros) {
 		if(pContadorNumeros == 7 || pContadorNumeros == 5) {

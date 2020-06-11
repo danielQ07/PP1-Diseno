@@ -1,7 +1,7 @@
 package logicadenogocios;
-import logicadenogocios.Cifrado;
+import logicadenogocios.ICifrado;
 
-public abstract class Transposicion implements Cifrado  {
+public abstract class Transposicion implements ICifrado  {
 	
 	protected String invertirPalabra (String pTexto ) {
 		

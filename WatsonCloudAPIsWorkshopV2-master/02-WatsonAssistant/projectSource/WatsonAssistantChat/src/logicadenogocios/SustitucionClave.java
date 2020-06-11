@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import util.ConversionAscii;
 
-public abstract class SustitucionClave implements Cifrado {
+public abstract class SustitucionClave implements ICifrado {
 	
 	protected ArrayList<Character> alfabeto = asignarAlfabeto();
 	private ArrayList<Character> asignarAlfabeto(){
