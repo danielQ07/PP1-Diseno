@@ -15,13 +15,18 @@ import javax.ws.rs.core.Response.Status;
 
 import org.json.JSONObject;
 
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.BasicAuthenticator;
 import com.ibm.cloud.sdk.core.security.IamAuthenticator;
+
 import com.ibm.watson.developer_cloud.assistant.v1.Assistant;
 import com.ibm.watson.developer_cloud.assistant.v1.model.Context;
 import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.assistant.v1.model.RuntimeEntity;
 import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
+import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
 @Path("/chatservice")
@@ -36,17 +41,28 @@ public class ChatService {
 	
 	public ChatService(){
 		try {
-			//loadProperties();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-		
+	
+	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
+        String entidad="";
+        for (int i = 0; i < pEntidades.size(); i++) {
+            if(pEntidades.get(i).getEntity().equalsIgnoreCase(pNombre)) {
+                entidad+= pEntidades.get(i).getValue();
+                i= pEntidades.size();
+            }
+        }
+        return entidad;
+    }
 	
 	@GET
 	@Produces("application/json")
 	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) {
+		
+		System.out.println("asdasdasdsaadasd");
 		
 		IamOptions iAmOptions = new IamOptions.Builder()
 			.apiKey(apiKey)
@@ -58,13 +74,34 @@ public class ChatService {
 		// Initialize with empty value to start the conversation.
 		JSONObject ctxJsonObj = new JSONObject(conversationCtx);
 		Context context = new Context();
-		context.putAll(ctxJsonObj.toMap());
+		context.putAll(ctxJsonObj.toMap());		
 		
 		InputData input = new InputData.Builder(conversationMsg).build();
 		MessageOptions options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
 		
 		MessageResponse assistantResponse = service.message(options).execute();
 		System.out.println(assistantResponse);
+		
+		
+		//DespuEs del assistant Response manipulamos el contexto
+		//Metemos informaciOn
+		context.put("pruebaVariable", "Soy un valor del cOdigo");
+		context.put("nose", "picha123");
+//				//downCast de info obtenida del contexto
+		String variableObtenida = (String) context.get("tipoCifrado");
+		//obtenemos entidades
+		List<RuntimeEntity> entidades= assistantResponse.getEntities();
+		String entidad= obtenerEntidad(entidades, "cifrados");
+		System.out.println("entidad "+entidad);
+		System.out.println("variable obtenida "+variableObtenida);
+		
+		
+		//RepeticiOn innecesaria (mete nuevo contexto a la conversaciOn)
+		input = new InputData.Builder(conversationMsg).build();
+        options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
+        
+        assistantResponse = service.message(options).execute();    
+		
 		
 		
 		// Print the output from dialog, if any.
@@ -78,6 +115,6 @@ public class ChatService {
 		object.put("response", assistantResponseText);
 		object.put("context", assistantResponse.getContext());
 		return Response.status(Status.OK).entity(object.toString()).build();
-	}	
-	
+	}
+		
 }
