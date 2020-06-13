@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.json.JSONObject;
 
+import com.ibm.cloud.sdk.core.security.IamAuthenticator;
 import com.ibm.watson.developer_cloud.assistant.v1.Assistant;
 import com.ibm.watson.developer_cloud.assistant.v1.model.Context;
 import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
@@ -40,6 +41,7 @@ public class ChatService {
 			e.printStackTrace();
 		}
 	}
+
 		
 	
 	@GET
