@@ -77,12 +77,16 @@ public class ChatService {
 		//Metemos informaciOn
 		context.put("pruebaVariable", "Soy un valor del cOdigo");
 		context.put("nose", "hola");
-//				//downCast de info obtenida del contexto
+//			//downCast de info obtenida del contexto
 		String variableObtenida = (String) context.get("tipoCifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensaje");
 		String tipoSustitucion = (String) context.get("tipoSustitucion");
 		
+		if(variableObtenida != null && tipoOperacion != null && tipoSustitucion != null && mensaje == null) {
+			System.out.println("refrescandoo");
+			getResponse(conversationMsg,conversationCtx);
+		}
 		
 		//obtenemos entidades
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
