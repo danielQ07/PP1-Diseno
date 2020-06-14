@@ -1,6 +1,7 @@
 package conexion;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +79,24 @@ public class ChatService {
 		context.put("pruebaVariable", "Soy un valor del cOdigo");
 		context.put("nose", "hola");
 //			//downCast de info obtenida del contexto
-		String variableObtenida = (String) context.get("tipoCifrado");
+		String tipoCifradoDescrifrado = (String) context.get("tipoCifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensaje");
 		String tipoSustitucion = (String) context.get("tipoSustitucion");
 		
-		if(variableObtenida != null && tipoOperacion != null && tipoSustitucion != null && mensaje == null) {
+		if(tipoCifradoDescrifrado != null && tipoOperacion != null && tipoSustitucion != null && mensaje == null) {
 			System.out.println("refrescandoo");
 			getResponse(conversationMsg,conversationCtx);
+		}
+		
+		if(tipoCifradoDescrifrado != null && tipoOperacion != null && tipoSustitucion != null && mensaje != null) {
+			
+			ArrayList<String> nuevo = new ArrayList<String>();
+			nuevo.add(tipoCifradoDescrifrado);
+			nuevo.add(tipoOperacion);
+			nuevo.add(tipoSustitucion);
+			nuevo.add(mensaje);
+			
 		}
 		
 		//obtenemos entidades
@@ -103,9 +114,7 @@ public class ChatService {
         options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
         
         assistantResponse = service.message(options).execute();    
-		
-		
-		
+
 		// Print the output from dialog, if any.
 		List<String> assistantResponseList = assistantResponse.getOutput().getText();
 		JSONObject object = new JSONObject();
@@ -117,6 +126,10 @@ public class ChatService {
 		object.put("response", assistantResponseText);
 		object.put("context", assistantResponse.getContext());
 		return Response.status(Status.OK).entity(object.toString()).build();
+	}
+	
+	private void llamarOperacion(ArrayList<String> pLista) {
+		
 	}
 	
 	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
