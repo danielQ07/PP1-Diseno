@@ -47,16 +47,6 @@ public class ChatService {
 		}
 	}
 	
-	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
-        String entidad="";
-        for (int i = 0; i < pEntidades.size(); i++) {
-            if(pEntidades.get(i).getEntity().equalsIgnoreCase(pNombre)) {
-                entidad+= pEntidades.get(i).getValue();
-                i= pEntidades.size();
-            }
-        }
-        return entidad;
-    }
 	
 	@GET
 	@Produces("application/json")
@@ -86,14 +76,22 @@ public class ChatService {
 		//DespuEs del assistant Response manipulamos el contexto
 		//Metemos informaciOn
 		context.put("pruebaVariable", "Soy un valor del cOdigo");
-		context.put("nose", "picha123");
+		context.put("nose", "hola");
 //				//downCast de info obtenida del contexto
 		String variableObtenida = (String) context.get("tipoCifrado");
+		String tipoOperacion = (String) context.get("tipoOperacion");
+		String mensaje = (String) context.get("mensaje");
+		String tipoSustitucion = (String) context.get("tipoSustitucion");
+		
+		
 		//obtenemos entidades
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
 		String entidad= obtenerEntidad(entidades, "cifrados");
 		System.out.println("entidad "+entidad);
-		System.out.println("variable obtenida "+variableObtenida);
+		System.out.println("tipo "+variableObtenida);
+		System.out.println("tipoOperacion "+tipoOperacion);
+		System.out.println("tipoSustitucion "+tipoSustitucion);
+		System.out.println("mensaje "+mensaje);
 		
 		
 		//RepeticiOn innecesaria (mete nuevo contexto a la conversaciOn)
@@ -116,5 +114,16 @@ public class ChatService {
 		object.put("context", assistantResponse.getContext());
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
+	
+	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
+        String entidad="";
+        for (int i = 0; i < pEntidades.size(); i++) {
+            if(pEntidades.get(i).getEntity().equalsIgnoreCase(pNombre)) {
+                entidad+= pEntidades.get(i).getValue();
+                i= pEntidades.size();
+            }
+        }
+        return entidad;
+    }
 		
 }
