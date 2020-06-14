@@ -30,6 +30,9 @@ import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
 import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
+import logicadenogocios.ICifrado;
+import logicadenogocios.Mensaje;
+
 @Path("/chatservice")
 public class ChatService {
 
@@ -51,7 +54,7 @@ public class ChatService {
 	
 	@GET
 	@Produces("application/json")
-	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) {
+	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		System.out.println("asdasdasdsaadasd");
 		
@@ -82,30 +85,28 @@ public class ChatService {
 		String tipoCifradoDescrifrado = (String) context.get("tipoCifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensaje");
-		String tipoSustitucion = (String) context.get("tipoSustitucion");
 		
-		if(tipoCifradoDescrifrado != null && tipoOperacion != null && tipoSustitucion != null && mensaje == null) {
+		if(tipoCifradoDescrifrado != null && tipoOperacion != null &&  mensaje == null) {
 			System.out.println("refrescandoo");
 			getResponse(conversationMsg,conversationCtx);
 		}
 		
-		if(tipoCifradoDescrifrado != null && tipoOperacion != null && tipoSustitucion != null && mensaje != null) {
+		if(tipoCifradoDescrifrado != null && tipoOperacion != null && mensaje != null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoCifradoDescrifrado);
 			nuevo.add(tipoOperacion);
-			nuevo.add(tipoSustitucion);
 			nuevo.add(mensaje);
-			
+			llamarOperacion(nuevo,context);
 		}
 		
 		//obtenemos entidades
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
 		String entidad= obtenerEntidad(entidades, "cifrados");
 		System.out.println("entidad "+entidad);
-		System.out.println("tipo "+variableObtenida);
+		System.out.println("tipo "+tipoCifradoDescrifrado);
 		System.out.println("tipoOperacion "+tipoOperacion);
-		System.out.println("tipoSustitucion "+tipoSustitucion);
+
 		System.out.println("mensaje "+mensaje);
 		
 		
@@ -128,7 +129,18 @@ public class ChatService {
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
-	private void llamarOperacion(ArrayList<String> pLista) {
+	private void llamarOperacion(ArrayList<String> pLista, Context context) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		ICifrado nuevo;
+		nuevo = (ICifrado) Class.forName(pLista.get(0)).newInstance();
+		Mensaje mensaje = new Mensaje(pLista.get(2));
+		
+		if(pLista.get(1) == "cifrado") {
+			
+			context.put("mensajeCifrado",nuevo.cifrar(mensaje));
+			return;
+		}
+		context.put("mensajeDescifrado",nuevo.descifrar(mensaje));
+		return;
 		
 	}
 	
