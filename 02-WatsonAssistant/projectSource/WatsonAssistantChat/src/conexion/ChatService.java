@@ -32,6 +32,7 @@ import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
 import logicadenogocios.ICifrado;
 import logicadenogocios.Mensaje;
+import logicadenogocios.PorLlave;
 
 @Path("/chatservice")
 public class ChatService {
@@ -84,12 +85,11 @@ public class ChatService {
 //			//downCast de info obtenida del contexto
 		String tipoCifradoDescrifrado = (String) context.get("tipoCifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
-		String mensaje = (String) context.get("mensaje");
+		String mensaje = (String) context.get("mensajeNormal");
+		String tipoSustitucion = (String) context.get("tipoSustitucion");
+		String llave = (String) context.get("llave");
 		
-		if(tipoCifradoDescrifrado != null && tipoOperacion != null &&  mensaje == null) {
-			System.out.println("refrescandoo");
-			getResponse(conversationMsg,conversationCtx);
-		}
+		
 		
 		if(tipoCifradoDescrifrado != null && tipoOperacion != null && mensaje != null) {
 			
@@ -97,7 +97,8 @@ public class ChatService {
 			nuevo.add(tipoCifradoDescrifrado);
 			nuevo.add(tipoOperacion);
 			nuevo.add(mensaje);
-			llamarOperacion(nuevo,context);
+			nuevo.add(llave);
+			context.put("mensajeCifrado",llamarOperacion(nuevo));
 		}
 		
 		//obtenemos entidades
@@ -126,21 +127,33 @@ public class ChatService {
 			
 		object.put("response", assistantResponseText);
 		object.put("context", assistantResponse.getContext());
+		
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
-	private void llamarOperacion(ArrayList<String> pLista, Context context) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		ICifrado nuevo;
-		nuevo = (ICifrado) Class.forName(pLista.get(0)).newInstance();
-		Mensaje mensaje = new Mensaje(pLista.get(2));
+	private String llamarOperacion(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
-		if(pLista.get(1) == "cifrado") {
-			
-			context.put("mensajeCifrado",nuevo.cifrar(mensaje));
-			return;
-		}
-		context.put("mensajeDescifrado",nuevo.descifrar(mensaje));
-		return;
+		ICifrado nuevo;
+		Mensaje mensaje = new Mensaje(pLista.get(2));
+//		if(pLista.get(0) != "sustitución") {
+//		
+//			
+//			nuevo = (ICifrado) Class.forName(pLista.get(0)).newInstance();
+//			
+//			
+//			if(pLista.get(1) == "cifrado") {
+//				
+//				return nuevo.cifrar(mensaje).getMensajeCifrado();
+//
+//			}
+//			return nuevo.descifrar(mensaje).getMensajeCifrado();
+//
+//		}
+		
+		nuevo = new PorLlave(pLista.get(3));
+		System.out.println(nuevo.cifrar(mensaje).getMensajeCifrado());
+		return nuevo.cifrar(mensaje).getMensajeCifrado();
+
 		
 	}
 	

@@ -60,9 +60,6 @@ public class AplPrueba {
     System.out.println(nuevo6.cifrar(mensaje6).getMensajeCifrado());
     System.out.println(nuevo6.descifrar(mensaje6).getMensajeDescifrado());
     
-    ChatService conexion = new ChatService();
-    conexion.getResponse("hola", "hola");
-    
   }
 
 
