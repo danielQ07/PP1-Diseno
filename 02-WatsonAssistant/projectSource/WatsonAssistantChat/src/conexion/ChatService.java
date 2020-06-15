@@ -83,20 +83,21 @@ public class ChatService {
 		context.put("pruebaVariable", "Soy un valor del cOdigo");
 		context.put("nose", "hola");
 //			//downCast de info obtenida del contexto
-		String tipoCifradoDescrifrado = (String) context.get("tipoCifrado");
+		String tipoEscogido = (String) context.get("tipoCifradoDescifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensajeNormal");
-		String tipoSustitucion = (String) context.get("tipoSustitucion");
 		String llave = (String) context.get("llave");
+		String subtipo = (String) context.get("subtipo");
 		
 		
 		
-		if(tipoCifradoDescrifrado != null && tipoOperacion != null && mensaje != null) {
+		if(tipoEscogido != null && tipoOperacion != null && mensaje != null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
-			nuevo.add(tipoCifradoDescrifrado);
-			nuevo.add(tipoOperacion);
-			nuevo.add(mensaje);
+			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
+			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
+			nuevo.add(mensaje); // 2 para el mensaje
+			nuevo.add(subtipo); // 3 para el subtipo
 			nuevo.add(llave);
 			context.put("mensajeCifrado",llamarOperacion(nuevo));
 		}
@@ -105,9 +106,9 @@ public class ChatService {
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
 		String entidad= obtenerEntidad(entidades, "cifrados");
 		System.out.println("entidad "+entidad);
-		System.out.println("tipo "+tipoCifradoDescrifrado);
+		System.out.println("tipo "+tipoEscogido);
 		System.out.println("tipoOperacion "+tipoOperacion);
-
+		System.out.println("subtipo  "+subtipo);
 		System.out.println("mensaje "+mensaje);
 		
 		
@@ -135,20 +136,20 @@ public class ChatService {
 		
 		ICifrado nuevo;
 		Mensaje mensaje = new Mensaje(pLista.get(2));
-//		if(pLista.get(0) != "sustitución") {
-//		
-//			
-//			nuevo = (ICifrado) Class.forName(pLista.get(0)).newInstance();
-//			
-//			
-//			if(pLista.get(1) == "cifrado") {
+		if(pLista.get(0) != "sustitución") {
+		
+			
+			nuevo = (ICifrado) Class.forName(pLista.get(3)).newInstance();
+			
+			
+			if(pLista.get(1) == "cifrado") {
 //				
 //				return nuevo.cifrar(mensaje).getMensajeCifrado();
 //
-//			}
+			}
 //			return nuevo.descifrar(mensaje).getMensajeCifrado();
 //
-//		}
+		}
 		
 		nuevo = new PorLlave(pLista.get(3));
 		System.out.println(nuevo.cifrar(mensaje).getMensajeCifrado());
