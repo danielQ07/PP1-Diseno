@@ -61,9 +61,7 @@ public class AplPrueba {
     System.out.println(nuevo6.descifrar(mensaje6).getMensajeDescifrado());
     
   }
-
-
-  }	
+ }	
 
 	
 
