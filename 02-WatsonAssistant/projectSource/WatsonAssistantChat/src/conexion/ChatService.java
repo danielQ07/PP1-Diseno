@@ -30,9 +30,14 @@ import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
 import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
+import logicadenogocios.CodificacionBinaria;
+import logicadenogocios.CodigoTelefonico;
 import logicadenogocios.ICifrado;
 import logicadenogocios.Mensaje;
+import logicadenogocios.MensajeInverso;
+import logicadenogocios.PalabraInversa;
 import logicadenogocios.PorLlave;
+import logicadenogocios.SustitucionCesar;
 
 @Path("/chatservice")
 public class ChatService {
@@ -82,15 +87,16 @@ public class ChatService {
 		//Metemos informaciOn
 		context.put("pruebaVariable", "Soy un valor del cOdigo");
 		context.put("nose", "hola");
-//			//downCast de info obtenida del contexto
+		//downCast de info obtenida del contexto
 		String tipoEscogido = (String) context.get("tipoCifradoDescifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensajeNormal");
 		String llave = (String) context.get("llave");
 		String subtipo = (String) context.get("subtipo");
+		String cifra = (String) context.get("cifra");
+		String posiciones = (String) context.get("posiciones");
 		
-		
-		
+
 		if(tipoEscogido != null && tipoOperacion != null && mensaje != null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
@@ -98,8 +104,15 @@ public class ChatService {
 			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
 			nuevo.add(mensaje); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
-			nuevo.add(llave);
-			context.put("mensajeCifrado",llamarOperacion(nuevo));
+			nuevo.add(llave); // 4 apra la llave
+			nuevo.add(cifra); // 5 apra la cifra
+			nuevo.add(posiciones); // 6 apra la cantiadPosiciones
+			if(tipoOperacion == "cifrar") {
+				context.put("mensajeCifrado",llamarCifrado(nuevo));
+			}
+			if(tipoOperacion == "descifrar") {
+				context.put("mensajeCifrado",llamarDescifrado(nuevo));
+			}
 		}
 		
 		//obtenemos entidades
@@ -110,6 +123,7 @@ public class ChatService {
 		System.out.println("tipoOperacion "+tipoOperacion);
 		System.out.println("subtipo  "+subtipo);
 		System.out.println("mensaje "+mensaje);
+		System.out.println("posiciones  "+posiciones);
 		
 		
 		//RepeticiOn innecesaria (mete nuevo contexto a la conversaciOn)
@@ -132,30 +146,46 @@ public class ChatService {
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
-	private String llamarOperacion(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private String llamarCifrado(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		ICifrado nuevo;
 		Mensaje mensaje = new Mensaje(pLista.get(2));
-		if(pLista.get(0) != "sustitución") {
 		
-			
-			nuevo = (ICifrado) Class.forName(pLista.get(3)).newInstance();
-			
-			
-			if(pLista.get(1) == "cifrado") {
-//				
-//				return nuevo.cifrar(mensaje).getMensajeCifrado();
-//
-			}
-//			return nuevo.descifrar(mensaje).getMensajeCifrado();
-//
+		switch(pLista.get(3)) {
+		  case "MensajeInverso":
+		    nuevo = new MensajeInverso();
+		    nuevo.cifrar(mensaje);
+		    break;
+		  case "CodigoBinario":
+			nuevo = new CodificacionBinaria();
+			nuevo.cifrar(mensaje);
+		    break;
+		  case "CodigoTelefonico":
+			nuevo = new CodigoTelefonico();
+			nuevo.cifrar(mensaje);
+			break;
+		  case "PalabraInversa":
+			nuevo = new PalabraInversa();
+			nuevo.cifrar(mensaje);
+			break;
+		  case "PorLlave":
+			nuevo = new PorLlave(pLista.get(4));
+			nuevo.cifrar(mensaje);
+			break;
+		  case "césar":
+			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
+			nuevo.cifrar(mensaje);
+			break;
+		  default:
+		    // code block
 		}
+			
+		return mensaje.getMensajeCifrado();
 		
-		nuevo = new PorLlave(pLista.get(3));
-		System.out.println(nuevo.cifrar(mensaje).getMensajeCifrado());
-		return nuevo.cifrar(mensaje).getMensajeCifrado();
-
-		
+	}
+	
+	private String llamarDescifrado(ArrayList<String> pLista) {
+		return "";
 	}
 	
 	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {

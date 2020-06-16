@@ -1,15 +1,17 @@
 package logicadenogocios;
 import util.ConversionAscii;
 
-public class CodificacionBinaria {
+public class CodificacionBinaria implements ICifrado {
 	
-	public String cifrar(Mensaje pMensaje) {
-	  return textoBinario(pMensaje.getMensajeViejo());		
+	public Mensaje cifrar(Mensaje pMensaje) {
+	  textoBinario(pMensaje.getMensajeViejo());	
+	  return pMensaje;
 	}
 	
 	
-	public String descifrar(Mensaje pMensaje) {
-	  return binarioTexto(pMensaje.getMensajeViejo());			  
+	public Mensaje descifrar(Mensaje pMensaje) {
+	   binarioTexto(pMensaje.getMensajeViejo());
+	   return pMensaje;
 	}
 	
 	private String cambiarCaracterBinario(int pValorLetra) {		
