@@ -135,7 +135,7 @@ public class ChatService {
         
         assistantResponse = service.message(options).execute();    
 
-		// Print the output from dialog, if any.
+		// Print the output from dialog, iif any.
 		List<String> assistantResponseList = assistantResponse.getOutput().getText();
 		JSONObject object = new JSONObject();
 		
