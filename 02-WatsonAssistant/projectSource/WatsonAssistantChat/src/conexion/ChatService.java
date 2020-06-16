@@ -107,11 +107,13 @@ public class ChatService {
 			nuevo.add(llave); // 4 apra la llave
 			nuevo.add(cifra); // 5 apra la cifra
 			nuevo.add(posiciones); // 6 apra la cantiadPosiciones
-			if(tipoOperacion == "cifrar") {
+			
+			if(tipoOperacion.equals("cifrado")) {
+				System.out.println("holaa");
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
-			if(tipoOperacion == "descifrar") {
-				context.put("mensajeCifrado",llamarDescifrado(nuevo));
+			if(tipoOperacion.equals("descifrado")) {
+				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
 		
@@ -168,7 +170,7 @@ public class ChatService {
 			nuevo = new PalabraInversa();
 			nuevo.cifrar(mensaje);
 			break;
-		  case "PorLlave":
+		  case "llave":
 			nuevo = new PorLlave(pLista.get(4));
 			nuevo.cifrar(mensaje);
 			break;
