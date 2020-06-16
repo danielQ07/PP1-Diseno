@@ -105,9 +105,9 @@ public class ChatService {
 			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
 			nuevo.add(mensaje); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
-			nuevo.add(llave); // 4 apra la llave
-			nuevo.add(cifra); // 5 apra la cifra
-			nuevo.add(posiciones); // 6 apra la cantiadPosiciones
+			nuevo.add(llave); // 4 para la llave
+			nuevo.add(cifra); // 5 para la cifra
+			nuevo.add(posiciones); // 6 para la cantiadPosiciones
 			
 			if(tipoOperacion.equals("cifrado")) {
 				System.out.println("holaa");
