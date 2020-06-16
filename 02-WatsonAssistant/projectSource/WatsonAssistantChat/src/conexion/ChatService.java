@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -29,6 +30,7 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.RuntimeEntity;
 import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
 import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
+import com.sun.org.apache.xerces.internal.impl.xs.identity.Selector.Matcher;
 
 import logicadenogocios.CodificacionBinaria;
 import logicadenogocios.CodigoTelefonico;
@@ -96,10 +98,13 @@ public class ChatService {
 		String subtipo = (String) context.get("subtipo");
 		String cifra = (String) context.get("cifra");
 		String posiciones = (String) context.get("posiciones");
+		String msjcompleto = (String) context.get("mensajeCompleto");
+		String operacionCompleto = (String) context.get("operacionCompleta");
+		//System.out.println(msjcompleto);
+		System.out.println(operacionCompleto);
 		
 
-		if(tipoOperacion != null && mensaje != null) {
-			
+		if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleto != null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -109,6 +114,39 @@ public class ChatService {
 			nuevo.add(llave); // 4 para la llave
 			nuevo.add(cifra); // 5 para la cifra
 			nuevo.add(posiciones); // 6 para la cantiadPosiciones
+
+			if(tipoOperacion.equals("cifrado")) {
+				System.out.println("holaa");
+				context.put("mensajeCifrado",llamarCifrado(nuevo));
+			}
+			if(tipoOperacion.equals("descifrado")) {
+				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
+			}
+			
+		}else if(tipoOperacion != null && subtipo != null && msjcompleto != null){
+			
+			ArrayList<String> nuevo = new ArrayList<String>();
+			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
+			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
+			nuevo.add(mensaje); // 2 para el mensaje
+			nuevo.add(subtipo); // 3 para el subtipo
+			nuevo.add(llave); // 4 para la llave
+			nuevo.add(cifra); // 5 para la cifra
+			msjcompleto = msjcompleto.replaceAll("\\D+","");
+			nuevo.add(msjcompleto);
+
+//			String[] nuevo = msjcompleto.split(" ");
+//			boolean bloqueado = false;
+//			String mmensaje = "";
+//			for(String palabra: nuevo) {
+//				if(palabra.charAt(0) == '"') {
+//					int contador = 1;
+//					while(!bloqueado) {
+//						if(pala) {
+//							
+//						}
+//					}
+//				}
 			
 			if(tipoOperacion.equals("cifrado")) {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
@@ -117,6 +155,10 @@ public class ChatService {
 			  context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
+			
+			
+		
+		
 		
 		//obtenemos entidades
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
