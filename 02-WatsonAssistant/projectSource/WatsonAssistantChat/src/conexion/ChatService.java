@@ -38,6 +38,7 @@ import logicadenogocios.MensajeInverso;
 import logicadenogocios.PalabraInversa;
 import logicadenogocios.PorLlave;
 import logicadenogocios.SustitucionCesar;
+import logicadenogocios.Vigenere;
 
 @Path("/chatservice")
 public class ChatService {
@@ -176,6 +177,10 @@ public class ChatService {
 			break;
 		  case "césar":
 			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
+			nuevo.cifrar(mensaje);
+			break;
+		  case "vigenére":
+			nuevo = new Vigenere(Integer.parseInt(pLista.get(5)));
 			nuevo.cifrar(mensaje);
 			break;
 		  default:
