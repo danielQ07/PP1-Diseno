@@ -124,7 +124,7 @@ public class ChatService {
 		System.out.println("entidad "+entidad);
 		System.out.println("tipo "+tipoEscogido);
 		System.out.println("tipoOperacion "+tipoOperacion);
-		System.out.println("subtipo  "+subtipo);
+		System.out.println("subtipo "+subtipo);
 		System.out.println("mensaje "+mensaje);
 		System.out.println("posiciones  "+posiciones);
 		
@@ -159,11 +159,13 @@ public class ChatService {
 		    nuevo = new MensajeInverso();
 		    nuevo.cifrar(mensaje);
 		    break;
-		  case "CodigoBinario":
+		  case "binaria":
+			  System.out.println("Entro");
 			nuevo = new CodificacionBinaria();
 			nuevo.cifrar(mensaje);
 		    break;
-		  case "CodigoTelefonico":
+		  case "código telefónico":
+			System.out.println("Entro");
 			nuevo = new CodigoTelefonico();
 			nuevo.cifrar(mensaje);
 			break;
