@@ -111,11 +111,10 @@ public class ChatService {
 			nuevo.add(posiciones); // 6 para la cantiadPosiciones
 			
 			if(tipoOperacion.equals("cifrado")) {
-				System.out.println("holaa");
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
+			  context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
 		
@@ -175,6 +174,7 @@ public class ChatService {
 			nuevo.cifrar(mensaje);
 			break;
 		  case "llave":
+			
 			nuevo = new PorLlave(pLista.get(4));
 			nuevo.cifrar(mensaje);
 			break;
@@ -194,8 +194,46 @@ public class ChatService {
 		
 	}
 	
-	private String llamarDescifrado(ArrayList<String> pLista) {
-		return "";
+	private String llamarDescifrado(ArrayList<String> pLista)  {
+	  ICifrado nuevoDescifrado;
+	  Mensaje mensaje = new Mensaje(pLista.get(2));
+	  
+	  switch (pLista.get(3)) {
+	     case "MensajeInverso":
+	    	nuevoDescifrado = new MensajeInverso();
+	    	nuevoDescifrado.descifrar(mensaje);
+		    break;
+		  case "codificación binaria":
+			nuevoDescifrado = new CodificacionBinaria();
+			nuevoDescifrado.descifrar(mensaje);
+		    break;
+		  case "código telefónico":
+			nuevoDescifrado = new CodigoTelefonico();
+			nuevoDescifrado.descifrar(mensaje);
+			break;
+		  case "PalabraInversa":
+			nuevoDescifrado = new PalabraInversa();
+			nuevoDescifrado.descifrar(mensaje);
+			break;
+		  case "llave":
+			System.out.println("Entro");
+			nuevoDescifrado = new PorLlave(pLista.get(4));
+			nuevoDescifrado.descifrar(mensaje);
+			break;
+		  case "césar":
+			nuevoDescifrado = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
+			nuevoDescifrado.descifrar(mensaje);
+			break;
+		  case "vigenére":
+			nuevoDescifrado = new Vigenere(Integer.parseInt(pLista.get(5)));
+			nuevoDescifrado.descifrar(mensaje);
+			break;
+		  default:
+	  
+	  }
+	  
+	  return mensaje.getMensajeDescifrado();
+		
 	}
 	
 	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
