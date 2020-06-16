@@ -10,7 +10,7 @@ public class CodificacionBinaria implements ICifrado {
 	
 	
 	public Mensaje descifrar(Mensaje pMensaje) {
-	  pMensaje.setMensajeDescifrado(binarioTexto(pMensaje.getMensajeViejo()));
+	  pMensaje.setMensajeDescifrado(binarioTexto(pMensaje.getMensajeCifrado()));
 	  return pMensaje;
 	}
 	

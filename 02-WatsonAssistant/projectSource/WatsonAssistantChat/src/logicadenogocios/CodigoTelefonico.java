@@ -29,7 +29,6 @@ public class CodigoTelefonico implements ICifrado{
 	}
 	@Override
 	public Mensaje descifrar(Mensaje pMensaje) {
-		
 		String mensajeDesencriptado = "";
 		String[] mensajeSeparado = pMensaje.getMensajeCifrado().split(" ");
 		
