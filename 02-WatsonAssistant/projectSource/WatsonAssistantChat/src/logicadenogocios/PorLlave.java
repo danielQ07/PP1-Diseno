@@ -50,7 +50,7 @@ public class PorLlave extends SustitucionClave {
 	@Override
 	public Mensaje descifrar(Mensaje pMensaje) {
 		String mensajeDesencriptado = "";
-		char[] mensajeSeparado = pMensaje.getMensajeViejo().toCharArray();
+		char[] mensajeSeparado = pMensaje.getMensajeCifrado().toCharArray();
 		
 		int contadorPalabraClave = 0;
 		

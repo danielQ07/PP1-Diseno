@@ -88,8 +88,6 @@ public class ChatService {
 		
 		//DespuEs del assistant Response manipulamos el contexto
 		//Metemos informaciOn
-		context.put("pruebaVariable", "Soy un valor del cOdigo");
-		context.put("nose", "hola");
 		//downCast de info obtenida del contexto
 		String tipoEscogido = (String) context.get("tipoCifradoDescifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
@@ -99,12 +97,12 @@ public class ChatService {
 		String cifra = (String) context.get("cifra");
 		String posiciones = (String) context.get("posiciones");
 		String msjcompleto = (String) context.get("mensajeCompleto");
-		String operacionCompleto = (String) context.get("operacionCompleta");
+		String operacionCompleta = (String) context.get("operacionCompleta");
 		//System.out.println(msjcompleto);
-		System.out.println(operacionCompleto);
+		System.out.println(operacionCompleta);
 		
 
-		if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleto != null) {
+		if(tipoOperacion != null && subtipo != null && mensaje != null ) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -120,6 +118,7 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
+				System.out.println("ENTRO DESCIFRADO");
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
@@ -152,6 +151,7 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
+			  
 			  context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
@@ -195,6 +195,7 @@ public class ChatService {
 		
 		ICifrado nuevo;
 		Mensaje mensaje = new Mensaje(pLista.get(2));
+		
 
 		switch(pLista.get(3)) {
 		  case "MensajeInverso":
@@ -216,7 +217,6 @@ public class ChatService {
 			nuevo.cifrar(mensaje);
 			break;
 		  case "llave":
-			
 			nuevo = new PorLlave(pLista.get(4));
 			nuevo.cifrar(mensaje);
 			break;
@@ -239,6 +239,7 @@ public class ChatService {
 	private String llamarDescifrado(ArrayList<String> pLista)  {
 	  ICifrado nuevoDescifrado;
 	  Mensaje mensaje = new Mensaje(pLista.get(2));
+	  mensaje.setMensajeCifrado(mensaje.getMensajeViejo());
 	  
 	  switch (pLista.get(3)) {
 	     case "MensajeInverso":
@@ -273,7 +274,7 @@ public class ChatService {
 		  default:
 	  
 	  }
-	  
+	  System.out.println(mensaje.getMensajeDescifrado());
 	  return mensaje.getMensajeDescifrado();
 		
 	}
