@@ -4,14 +4,14 @@ import util.ConversionAscii;
 public class CodificacionBinaria implements ICifrado {
 	
 	public Mensaje cifrar(Mensaje pMensaje) {
-	  textoBinario(pMensaje.getMensajeViejo());	
+	  pMensaje.setMensajeCifrado(textoBinario(pMensaje.getMensajeViejo()));	
 	  return pMensaje;
 	}
 	
 	
 	public Mensaje descifrar(Mensaje pMensaje) {
-	   binarioTexto(pMensaje.getMensajeViejo());
-	   return pMensaje;
+	  pMensaje.setMensajeDescifrado(binarioTexto(pMensaje.getMensajeViejo()));
+	  return pMensaje;
 	}
 	
 	private String cambiarCaracterBinario(int pValorLetra) {		

@@ -63,7 +63,7 @@ public class ChatService {
 	@Produces("application/json")
 	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
-		System.out.println("asdasdasdsaadasd");
+
 		
 		IamOptions iAmOptions = new IamOptions.Builder()
 			.apiKey(apiKey)
@@ -98,7 +98,8 @@ public class ChatService {
 		String posiciones = (String) context.get("posiciones");
 		
 
-		if(tipoEscogido != null && tipoOperacion != null && mensaje != null) {
+		if(tipoOperacion != null && mensaje != null) {
+			
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -153,13 +154,13 @@ public class ChatService {
 		
 		ICifrado nuevo;
 		Mensaje mensaje = new Mensaje(pLista.get(2));
-		
+
 		switch(pLista.get(3)) {
 		  case "MensajeInverso":
 		    nuevo = new MensajeInverso();
 		    nuevo.cifrar(mensaje);
 		    break;
-		  case "binaria":
+		  case "codificación binaria":
 			  System.out.println("Entro");
 			nuevo = new CodificacionBinaria();
 			nuevo.cifrar(mensaje);
