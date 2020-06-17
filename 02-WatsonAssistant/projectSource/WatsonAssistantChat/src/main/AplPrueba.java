@@ -45,8 +45,8 @@ public class AplPrueba {
     
 
 	  
-    Mensaje mensaje2 = new Mensaje("Viva la Vida");
-    SustitucionCesar nuevaCesar = new SustitucionCesar(8);
+    Mensaje mensaje2 = new Mensaje("tarea programada criptografia de datos jeje");
+    SustitucionCesar nuevaCesar = new SustitucionCesar(3);
     System.out.println(mensaje2.getMensajeViejo());
     nuevaCesar.cifrar(mensaje2);
     System.out.println(mensaje2.getMensajeCifrado());

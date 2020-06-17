@@ -65,8 +65,6 @@ public class ChatService {
 	@Produces("application/json")
 	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
-
-		
 		IamOptions iAmOptions = new IamOptions.Builder()
 			.apiKey(apiKey)
 		    .build();
@@ -98,11 +96,12 @@ public class ChatService {
 		String posiciones = (String) context.get("posiciones");
 		String msjcompleto = (String) context.get("mensajeCompleto");
 		String operacionCompleta = (String) context.get("operacionCompleta");
-		System.out.println("msj completo "+msjcompleto);
-		System.out.println(operacionCompleta);
+		String terminado = (String) context.get("terminado");
+		System.out.println(mensaje);
 		
 
-		if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleta == null) {
+		//if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleta == null && terminado != null ) {
+		if(terminado != null && operacionCompleta == null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -117,11 +116,11 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-				System.out.println("ENTRO DESCIFRADO");
+			
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
-		}else if(tipoOperacion != null && subtipo != null && operacionCompleta != null && msjcompleto != null){
+		}else if(operacionCompleta != null && terminado != null){
 
 			
 
@@ -132,8 +131,10 @@ public class ChatService {
 			nuevo.add(msjcompleto); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
 			
-			
-			String llaveExtraida = filtrarLlave(llave);
+			String llaveExtraida = "";
+			if(llave != null) {
+				llaveExtraida = filtrarLlave(llave);
+			}
 			nuevo.add(llaveExtraida); // 4 para la llave
 			String cifraEncontrada = mensaje.replaceAll("\\D+","");
 			nuevo.add(cifraEncontrada); // 5 para la cifra
@@ -146,7 +147,8 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-			  context.put("mensajeDescifrado",llamarDescifrado(nuevo));
+				System.out.println("ENTRO DESCIFRADO");
+			    context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
 			
@@ -279,9 +281,11 @@ public class ChatService {
 	    	nuevoDescifrado = new MensajeInverso();
 	    	nuevoDescifrado.descifrar(mensaje);
 		    break;
-		  case "codificación binaria":
+		  case "codigo binario":
+			  System.out.println("BINARIAA");
 			nuevoDescifrado = new CodificacionBinaria();
 			nuevoDescifrado.descifrar(mensaje);
+			System.out.println(mensaje.getMensajeDescifrado());
 		    break;
 		  case "código telefónico":
 			nuevoDescifrado = new CodigoTelefonico();
