@@ -7,6 +7,10 @@ import logicadenogocios.PorLlave;
 import logicadenogocios.SustitucionCesar;
 
 import logicadenogocios.Vigenere;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import conexion.ChatService;
 import logicadenogocios.CodificacionBinaria;
 import logicadenogocios.CodigoTelefonico;
@@ -17,6 +21,11 @@ public class AplPrueba {
   public static void main(String[] args) {
 	  
 
+	  String var = "";
+	 Matcher matcher = Pattern.compile("llave \"(.*?)\"").matcher("por sustitución usando el método llave del texto \"tarea programada sobre codificación\" con la siguiente palabra llave \"tango\"");
+	 if (matcher.find()){
+		 System.out.println(matcher.group(1));
+	 }
 	  
 
 

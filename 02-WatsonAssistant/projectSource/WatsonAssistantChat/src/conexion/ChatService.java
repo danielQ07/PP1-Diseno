@@ -136,8 +136,9 @@ public class ChatService {
 			nuevo.add(llaveExtraida); // 4 para la llave
 			String cifraEncontrada = mensaje.replaceAll("\\D+","");
 			nuevo.add(cifraEncontrada); // 5 para la cifra
+			
 			String posicionesEncotradas = mensaje.replaceAll("\\D+","");
-			System.out.println(posicionesEncotradas+ "arajo1");
+
 			nuevo.add(posicionesEncotradas);
 			
 			if(tipoOperacion.equals("cifrado")) {
