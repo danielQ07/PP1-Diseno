@@ -123,6 +123,7 @@ public class ChatService {
 			}
 			
 		}else if(tipoOperacion != null && subtipo != null && operacionCompleta != null && msjcompleto != null){
+
 			
 
 			ArrayList<String> nuevo = new ArrayList<String>();
@@ -143,7 +144,6 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-			  
 			  context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
@@ -238,12 +238,10 @@ public class ChatService {
 		    nuevo.cifrar(mensaje);
 		    break;
 		  case "codificación binaria":
-			  System.out.println("Entro");
 			nuevo = new CodificacionBinaria();
 			nuevo.cifrar(mensaje);
 		    break;
 		  case "código telefónico":
-			System.out.println("Entro");
 			nuevo = new CodigoTelefonico();
 			nuevo.cifrar(mensaje);
 			break;
@@ -275,10 +273,13 @@ public class ChatService {
 	private String llamarDescifrado(ArrayList<String> pLista)  {
 	  ICifrado nuevoDescifrado;
 	  Mensaje mensaje = new Mensaje(pLista.get(2));
-	  mensaje.setMensajeCifrado(mensaje.getMensajeViejo());
+	  mensaje.setMensajeCifrado(pLista.get(2));
 	  
 	  switch (pLista.get(3)) {
 	     case "MensajeInverso":
+	    	System.out.println("ENTRA");
+	    	System.out.println(mensaje.getMensajeViejo());
+	    	System.out.println(mensaje.getMensajeCifrado());
 	    	nuevoDescifrado = new MensajeInverso();
 	    	nuevoDescifrado.descifrar(mensaje);
 		    break;

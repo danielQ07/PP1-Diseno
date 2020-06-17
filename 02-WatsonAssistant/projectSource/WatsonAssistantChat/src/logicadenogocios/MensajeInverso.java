@@ -9,8 +9,10 @@ public class MensajeInverso extends Transposicion {
   }
 	  
   public Mensaje descifrar(Mensaje pMensaje) {
-		  
-    return mensajeInverso(pMensaje);  
+	  
+     mensajeInverso(pMensaje);
+     pMensaje.setMensajeDescifrado(pMensaje.getMensajeCifrado());
+     return pMensaje;
   }
   
   private Mensaje mensajeInverso(Mensaje pMensaje) {
