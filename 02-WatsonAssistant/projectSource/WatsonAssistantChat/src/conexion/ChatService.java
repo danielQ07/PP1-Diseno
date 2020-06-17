@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,7 +31,6 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.RuntimeEntity;
 import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
 import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
-import com.sun.org.apache.xerces.internal.impl.xs.identity.Selector.Matcher;
 
 import logicadenogocios.CodificacionBinaria;
 import logicadenogocios.CodigoTelefonico;
@@ -132,7 +132,9 @@ public class ChatService {
 			msjcompleto = eliminarFinal(msjcompleto);
 			nuevo.add(msjcompleto); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
-			String llaveExtraida = extraerLlave(msjcompleto);
+			
+			
+			String llaveExtraida = filtrarLlave(llave);
 			nuevo.add(llaveExtraida); // 4 para la llave
 			String cifraEncontrada = mensaje.replaceAll("\\D+","");
 			nuevo.add(cifraEncontrada); // 5 para la cifra
@@ -181,19 +183,6 @@ public class ChatService {
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
-	private String extraerLlave(String pMensaje) {
-		
-		String[] completo = pMensaje.split(" ");
-		int contador = 0;
-		
-		while(completo.length < contador) {
-			System.out.println(completo[contador]);
-			contador++;
-		}
-		
-		
-		return "tango";
-	}
 	
 	private String eliminarFinal(String pMensaje) {
 
@@ -225,6 +214,15 @@ public class ChatService {
 		
 		return mensajeFiltrado;
 		
+	}
+	
+	private String filtrarLlave(String pLlave) {
+		
+		Matcher matcher = Pattern.compile(" \"(.*?)\"").matcher(pLlave);
+		 if (matcher.find()){
+			 return matcher.group(1);
+		 }
+		 return "";
 	}
 	
 	private String llamarCifrado(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

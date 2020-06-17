@@ -21,8 +21,8 @@ public class AplPrueba {
   public static void main(String[] args) {
 	  
 
-	  String var = "";
-	 Matcher matcher = Pattern.compile("llave \"(.*?)\"").matcher("por sustitución usando el método llave del texto \"tarea programada sobre codificación\" con la siguiente palabra llave \"tango\"");
+	  String var = "KEVIN PLAYAZO";
+	 Matcher matcher = Pattern.compile(" \"(.*?)\"").matcher("\" \"tango\"\"");
 	 if (matcher.find()){
 		 System.out.println(matcher.group(1));
 	 }
