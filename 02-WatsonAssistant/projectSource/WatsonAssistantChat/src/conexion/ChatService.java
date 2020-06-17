@@ -184,7 +184,6 @@ public class ChatService {
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
-	
 	private String eliminarFinal(String pMensaje) {
 
 		String mensajeFiltrado = "";
