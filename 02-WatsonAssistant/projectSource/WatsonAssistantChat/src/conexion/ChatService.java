@@ -98,11 +98,11 @@ public class ChatService {
 		String posiciones = (String) context.get("posiciones");
 		String msjcompleto = (String) context.get("mensajeCompleto");
 		String operacionCompleta = (String) context.get("operacionCompleta");
-		//System.out.println(msjcompleto);
+		System.out.println("msj completo "+msjcompleto);
 		System.out.println(operacionCompleta);
 		
 
-		if(tipoOperacion != null && subtipo != null && mensaje != null ) {
+		if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleta == null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -122,30 +122,22 @@ public class ChatService {
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
-		}else if(tipoOperacion != null && subtipo != null && msjcompleto != null){
+		}else if(tipoOperacion != null && subtipo != null && operacionCompleta != null && msjcompleto != null){
 			
+
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
 			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
-			nuevo.add(mensaje); // 2 para el mensaje
+			msjcompleto = eliminarFinal(msjcompleto);
+			nuevo.add(msjcompleto); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
-			nuevo.add(llave); // 4 para la llave
-			nuevo.add(cifra); // 5 para la cifra
-			msjcompleto = msjcompleto.replaceAll("\\D+","");
-			nuevo.add(msjcompleto);
-
-//			String[] nuevo = msjcompleto.split(" ");
-//			boolean bloqueado = false;
-//			String mmensaje = "";
-//			for(String palabra: nuevo) {
-//				if(palabra.charAt(0) == '"') {
-//					int contador = 1;
-//					while(!bloqueado) {
-//						if(pala) {
-//							
-//						}
-//					}
-//				}
+			String llaveExtraida = extraerLlave(msjcompleto);
+			nuevo.add(llaveExtraida); // 4 para la llave
+			String cifraEncontrada = mensaje.replaceAll("\\D+","");
+			nuevo.add(cifraEncontrada); // 5 para la cifra
+			String posicionesEncotradas = mensaje.replaceAll("\\D+","");
+			System.out.println(posicionesEncotradas+ "arajo1");
+			nuevo.add(posicionesEncotradas);
 			
 			if(tipoOperacion.equals("cifrado")) {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
@@ -156,10 +148,7 @@ public class ChatService {
 			}
 		}
 			
-			
-		
-		
-		
+	
 		//obtenemos entidades
 		List<RuntimeEntity> entidades= assistantResponse.getEntities();
 		String entidad= obtenerEntidad(entidades, "cifrados");
@@ -189,6 +178,52 @@ public class ChatService {
 		object.put("context", assistantResponse.getContext());
 		
 		return Response.status(Status.OK).entity(object.toString()).build();
+	}
+	
+	private String extraerLlave(String pMensaje) {
+		
+		String[] completo = pMensaje.split(" ");
+		int contador = 0;
+		
+		while(completo.length < contador) {
+			System.out.println(completo[contador]);
+			contador++;
+		}
+		
+		
+		return "tango";
+	}
+	
+	private String eliminarFinal(String pMensaje) {
+
+		String mensajeFiltrado = "";
+
+		String[] array = pMensaje.split(" ");
+		int contador = 0;
+
+		
+		while(array.length > contador){
+
+			if(array[contador] == array[array.length-1]) {
+
+				int contador2 = 0;
+				String ultimaPalabra = "";
+				while(array[contador].length()-1 > contador2) {
+
+					ultimaPalabra += array[contador].charAt(contador2);
+					contador2++;
+				}
+				mensajeFiltrado += ultimaPalabra;
+				break;
+			}
+
+			mensajeFiltrado += array[contador];
+			mensajeFiltrado += " ";
+			contador++;
+		}
+		
+		return mensajeFiltrado;
+		
 	}
 	
 	private String llamarCifrado(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -221,6 +256,7 @@ public class ChatService {
 			nuevo.cifrar(mensaje);
 			break;
 		  case "césar":
+			System.out.println(pLista.get(6)+ "ARAJO");
 			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
 			nuevo.cifrar(mensaje);
 			break;
