@@ -102,7 +102,7 @@ public class ChatService {
 		System.out.println(operacionCompleta);
 		
 
-		if(tipoOperacion != null && subtipo != null && mensaje != null ) {
+		if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleta == null) {
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -122,7 +122,7 @@ public class ChatService {
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
-		}else if(tipoOperacion != null && subtipo != null && msjcompleto != null){
+		}else if(tipoOperacion != null && subtipo != null && msjcompleto != null && operacionCompleta != null){
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
