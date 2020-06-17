@@ -117,7 +117,6 @@ public class ChatService {
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-				System.out.println("ENTRO DESCIFRADO");
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			

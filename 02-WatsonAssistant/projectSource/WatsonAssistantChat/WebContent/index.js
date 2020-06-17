@@ -3,7 +3,7 @@ class App extends React.Component {
         super()
         this.state = {
             messages: [],
-        	ctx: {usr: 'ezamora'}
+        	ctx: {usr: 'WatsonAssistant'}
         }
         this.sendMessage = this.sendMessage.bind(this)
     } 
