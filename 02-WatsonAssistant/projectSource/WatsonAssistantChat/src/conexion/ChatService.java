@@ -114,7 +114,6 @@ public class ChatService {
 			nuevo.add(posiciones); // 6 para la cantiadPosiciones
 
 			if(tipoOperacion.equals("cifrado")) {
-				System.out.println("holaa");
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
@@ -273,12 +272,10 @@ public class ChatService {
 	  ICifrado nuevoDescifrado;
 	  Mensaje mensaje = new Mensaje(pLista.get(2));
 	  mensaje.setMensajeCifrado(pLista.get(2));
+	  System.out.println("PRINT GET2 "+ pLista.get(2));
 	  
 	  switch (pLista.get(3)) {
 	     case "MensajeInverso":
-	    	System.out.println("ENTRA");
-	    	System.out.println(mensaje.getMensajeViejo());
-	    	System.out.println(mensaje.getMensajeCifrado());
 	    	nuevoDescifrado = new MensajeInverso();
 	    	nuevoDescifrado.descifrar(mensaje);
 		    break;

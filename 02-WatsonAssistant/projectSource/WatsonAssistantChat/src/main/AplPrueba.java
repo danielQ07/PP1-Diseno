@@ -78,8 +78,9 @@ public class AplPrueba {
 
     Mensaje mensaje6 = new Mensaje("tarea programada criptografia de datos");
     CodigoTelefonico nuevo6 = new CodigoTelefonico();
+    
     System.out.println(nuevo6.alfabeto);
-    System.out.println(nuevo6.cifrar(mensaje6).getMensajeCifrado());
+    System.out.println("PRUEBAAAA "+nuevo6.cifrar(mensaje6).getMensajeCifrado());
     System.out.println(nuevo6.descifrar(mensaje6).getMensajeDescifrado());
     
   }

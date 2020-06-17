@@ -31,6 +31,7 @@ public class CodigoTelefonico implements ICifrado{
 	public Mensaje descifrar(Mensaje pMensaje) {
 		String mensajeDesencriptado = "";
 		String[] mensajeSeparado = pMensaje.getMensajeCifrado().split(" ");
+		System.out.println(pMensaje.getMensajeCifrado());
 		
 		for(String letra: mensajeSeparado) {
 			
@@ -71,6 +72,7 @@ public class CodigoTelefonico implements ICifrado{
 
 		if(!pLetra.equals("*")) {
 			String[] numerosStr = pLetra.split("");
+			System.out.println(pLetra);
 			return (mensajefinal += alfabeto.get(Integer.parseInt(numerosStr[0])-2).get(Integer.parseInt(numerosStr[1])-1));
 		}
 		
