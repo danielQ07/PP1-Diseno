@@ -1,6 +1,7 @@
 package main;
 
 import logicadenogocios.Mensaje;
+import logicadenogocios.MensajeInverso;
 import logicadenogocios.PalabraInversa;
 import logicadenogocios.PorLlave;
 import logicadenogocios.SustitucionCesar;
@@ -15,12 +16,17 @@ public class AplPrueba {
 	
   public static void main(String[] args) {
 	  
-    Mensaje mensaje1 = new Mensaje("esto es un secreto no lo puedo decir aserpros") ;
+    Mensaje mensaje1 = new Mensaje("nohtyP se erbmon im aloH") ;
+    MensajeInverso mensajeinverso = new MensajeInverso();
+    mensajeinverso.descifrar(mensaje1);
+    System.out.println(mensaje1.getMensajeDescifrado());
     PalabraInversa palabraInversa = new PalabraInversa();
     
     palabraInversa.cifrar(mensaje1);
     System.out.println(mensaje1.getMensajeCifrado());
     palabraInversa.descifrar(mensaje1);
+    
+    
    
 	  
     Mensaje mensaje2 = new Mensaje("Viva la Vida");

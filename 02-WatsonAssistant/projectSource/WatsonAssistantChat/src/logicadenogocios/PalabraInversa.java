@@ -10,7 +10,7 @@ public class PalabraInversa extends Transposicion {
   }
   
   public Mensaje descifrar(Mensaje pMensaje) {
-	//pMensaje.setMensajeDescifrado(pMensaje.getMensajeCifrado());  
+	pMensaje.setMensajeDescifrado(pMensaje.getMensajeCifrado());  
 	return palabraInversa(pMensaje);  
   }
   
@@ -21,11 +21,11 @@ public class PalabraInversa extends Transposicion {
     String [] listaPalabras = textoMensaje.split("\\s+");
     
     for(String palabraActual : listaPalabras) {
-    
       textoFinal += invertirPalabra(palabraActual) + " ";
     	
     }
     
+    System.out.println(pMensaje.getMensajeCifrado());
     pMensaje.setMensajeCifrado(textoFinal);
     return pMensaje;
   }
