@@ -120,7 +120,7 @@ public class ChatService {
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
-		}else if(operacionCompleta != null && terminado != null){
+		}else if(tipoOperacion != null && subtipo != null && operacionCompleta != null && msjcompleto != null && terminado != null){
 
 			
 
@@ -144,6 +144,7 @@ public class ChatService {
 			nuevo.add(posicionesEncotradas);
 			
 			if(tipoOperacion.equals("cifrado")) {
+				System.out.println("ENTRO CIFRADO");
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
@@ -298,6 +299,7 @@ public class ChatService {
 			System.out.println("Entro");
 			nuevoDescifrado = new PorLlave(pLista.get(4));
 			nuevoDescifrado.descifrar(mensaje);
+			System.out.println(mensaje.getMensajeDescifrado());
 			break;
 		  case "césar":
 			nuevoDescifrado = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
