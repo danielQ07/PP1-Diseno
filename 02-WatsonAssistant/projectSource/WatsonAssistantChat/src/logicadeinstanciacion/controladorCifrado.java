@@ -17,9 +17,6 @@ public class controladorCifrado {
     ICifrado cifrado;
     cifrado = fabrica.crearCifradoDescifrado(pTipo, subTipo, parametro);
     return cifrado;
-    
-    
-	  
   }
 
 }
