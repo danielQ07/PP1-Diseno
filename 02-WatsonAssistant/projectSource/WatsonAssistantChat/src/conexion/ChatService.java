@@ -85,6 +85,7 @@ public class ChatService {
 		String msjcompleto = (String) context.get("mensajeCompleto");
 		String operacionCompleta = (String) context.get("operacionCompleta");
 		String terminado = (String) context.get("terminado");
+		String validarInstanciacion = (String) context.get("validarInstanciacion");
 
 		
 		if(validarMensajeIncompleto(terminado,operacionCompleta)) {
@@ -99,6 +100,7 @@ public class ChatService {
 			nuevo.add(llave); // 4 para la llave
 			nuevo.add(cifra); // 5 para la cifra
 			nuevo.add(posiciones); // 6 para la cantiadPosiciones
+			nuevo.add(validarInstanciacion); //7 para validar la instanciacion
 
 			if(tipoOperacion.equals("cifrado")) {
 				System.out.println("ENTRO CIFRADO incompleto");
