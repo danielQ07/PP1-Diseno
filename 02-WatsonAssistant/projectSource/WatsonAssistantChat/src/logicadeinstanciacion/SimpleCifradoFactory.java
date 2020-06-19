@@ -15,7 +15,7 @@ public class SimpleCifradoFactory {
 			return iCifrado;
 		}
 		
-		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor((parametro.getClass()));
+		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor(Integer.TYPE);
 		iCifrado = (ICifrado) construc.newInstance(parametro);
 		return iCifrado;
 	}
