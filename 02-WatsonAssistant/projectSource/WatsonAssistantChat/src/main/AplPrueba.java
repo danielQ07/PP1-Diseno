@@ -8,17 +8,20 @@ import logicadenogocios.SustitucionCesar;
 
 import logicadenogocios.Vigenere;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import conexion.ChatService;
+import logicadeinstanciacion.SimpleCifradoFactory;
 import logicadenogocios.CodificacionBinaria;
 import logicadenogocios.CodigoTelefonico;
+import logicadenogocios.ICifrado;
 
 
 public class AplPrueba {
 	
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 	  
 
 	  String var = "KEVIN PLAYAZO";
@@ -73,8 +76,8 @@ public class AplPrueba {
     System.out.println(mensaje4.getMensajeDescifrado());
 
     Mensaje mensaje5 = new Mensaje("tarea programada");
-    CodificacionBinaria nuevaBinario = new CodificacionBinaria();
-    System.out.println(nuevaBinario.cifrar(mensaje5));
+//    CodificacionBinaria nuevaBinario = new CodificacionBinaria();
+//    System.out.println(nuevaBinario.cifrar(mensaje5));
 
     Mensaje mensaje6 = new Mensaje("tarea programada criptografia de datos");
     CodigoTelefonico nuevo6 = new CodigoTelefonico();
@@ -82,7 +85,12 @@ public class AplPrueba {
     System.out.println(nuevo6.alfabeto);
     System.out.println("PRUEBAAAA "+nuevo6.cifrar(mensaje6).getMensajeCifrado());
     System.out.println(nuevo6.descifrar(mensaje6).getMensajeDescifrado());
+   
     
+    SimpleCifradoFactory nuevoo = new SimpleCifradoFactory();
+    ICifrado aa = nuevoo.crearCifradoDescirado("SustitucionCesar", "",3);
+    aa.cifrar(mensaje5);
+    System.out.println(mensaje5.getMensajeCifrado());
   }
  }	
 
