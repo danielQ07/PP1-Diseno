@@ -86,8 +86,14 @@ public class AplPrueba {
     System.out.println("PRUEBAAAA "+nuevo6.cifrar(mensaje6).getMensajeCifrado());
     System.out.println(nuevo6.descifrar(mensaje6).getMensajeDescifrado());
    
+
    /* SimpleCifradoFactory nuevoo = new SimpleCifradoFactory();
     ICifrado aa = nuevoo.crearCifradoDescirado("PorLLave", "","Tango");
+
+    
+    SimpleCifradoFactory nuevoo = new SimpleCifradoFactory();
+    ICifrado aa = nuevoo.crearCifradoDescifrado("SustitucionCesar", "", 3);
+
     aa.cifrar(mensaje5);
     System.out.println(mensaje5.getMensajeCifrado());*/
     

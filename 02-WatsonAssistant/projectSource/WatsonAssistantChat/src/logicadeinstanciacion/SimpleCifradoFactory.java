@@ -13,10 +13,10 @@ public class SimpleCifradoFactory {
 			iCifrado = (ICifrado) Class.forName("logicadenogocios."+pType).newInstance();
 			return iCifrado;
 		}
-		
-		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor(Integer.TYPE);
+		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor(parametro.getClass());
 		iCifrado = (ICifrado) construc.newInstance(parametro);
 		return iCifrado;
+		
 	}
 	
 }

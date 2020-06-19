@@ -2,9 +2,9 @@ package logicadenogocios;
 
 public class Vigenere extends SustitucionClave {
 	
-	private int cifra;
+	private Integer cifra;
 	
-	public Vigenere(int pCifra) {
+	public Vigenere(Integer pCifra) {
 		this.cifra = pCifra;
 	}
 
