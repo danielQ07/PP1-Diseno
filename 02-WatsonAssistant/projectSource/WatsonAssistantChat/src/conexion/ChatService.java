@@ -60,33 +60,21 @@ public class ChatService {
 		}
 	}
 	
-	
 	@GET
 	@Produces("application/json")
 	public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
-		IamOptions iAmOptions = new IamOptions.Builder()
-			.apiKey(apiKey)
-		    .build();
-
-		Assistant service = new Assistant("2018-09-20", iAmOptions);
-		service.setEndPoint(assistantURL);
-		
-		// Initialize with empty value to start the conversation.
-		JSONObject ctxJsonObj = new JSONObject(conversationCtx);
-		Context context = new Context();
-		context.putAll(ctxJsonObj.toMap());		
+		Assistant service = getService( conversationMsg, conversationCtx);
+	
+		Context context = getContext(conversationCtx);	
 		
 		InputData input = new InputData.Builder(conversationMsg).build();
+		
 		MessageOptions options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
 		
-		MessageResponse assistantResponse = service.message(options).execute();
-		System.out.println(assistantResponse);
+		MessageResponse assistantResponse = getAsistant(service,conversationMsg, context);
 		
-		
-		//DespuEs del assistant Response manipulamos el contexto
-		//Metemos informaciOn
-		//downCast de info obtenida del contexto
+		//obtener todas las variables de context del watson
 		String tipoEscogido = (String) context.get("tipoCifradoDescifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensajeNormal");
@@ -97,11 +85,11 @@ public class ChatService {
 		String msjcompleto = (String) context.get("mensajeCompleto");
 		String operacionCompleta = (String) context.get("operacionCompleta");
 		String terminado = (String) context.get("terminado");
-		System.out.println(mensaje);
-		
 
-		//if(tipoOperacion != null && subtipo != null && mensaje != null && operacionCompleta == null && terminado != null ) {
-		if(terminado != null && operacionCompleta == null) {
+		
+		if(validarMensajeIncompleto(terminado,operacionCompleta)) {
+			
+			System.out.println("ENTRO if");
 			
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
@@ -113,28 +101,27 @@ public class ChatService {
 			nuevo.add(posiciones); // 6 para la cantiadPosiciones
 
 			if(tipoOperacion.equals("cifrado")) {
+				System.out.println("ENTRO CIFRADO incompleto");
 				context.put("mensajeCifrado",llamarCifrado(nuevo));
 			}
 			if(tipoOperacion.equals("descifrado")) {
-
+				System.out.println("ENTRO desCIFRADO incompleto");
 				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 			
-		}else if(tipoOperacion != null && subtipo != null && operacionCompleta != null && msjcompleto != null && terminado != null){
-
-			
+		}else if(validarMensajeCompleto(terminado,operacionCompleta)){
 
 			ArrayList<String> nuevo = new ArrayList<String>();
 			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
 			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
+			
 			msjcompleto = eliminarFinal(msjcompleto);
+			
 			nuevo.add(msjcompleto); // 2 para el mensaje
 			nuevo.add(subtipo); // 3 para el subtipo
 			
-			String llaveExtraida = "";
-			if(llave != null) {
-				llaveExtraida = filtrarLlave(llave);
-			}
+			String llaveExtraida = filtrarLlave(llave);
+			
 			nuevo.add(llaveExtraida); // 4 para la llave
 			String cifraEncontrada = mensaje.replaceAll("\\D+","");
 			nuevo.add(cifraEncontrada); // 5 para la cifra
@@ -152,26 +139,17 @@ public class ChatService {
 			    context.put("mensajeDescifrado",llamarDescifrado(nuevo));
 			}
 		}
-			
-	
-		//obtenemos entidades
-		List<RuntimeEntity> entidades= assistantResponse.getEntities();
-		String entidad= obtenerEntidad(entidades, "cifrados");
-		System.out.println("entidad "+entidad);
-		System.out.println("tipo "+tipoEscogido);
-		System.out.println("tipoOperacion "+tipoOperacion);
-		System.out.println("subtipo "+subtipo);
-		System.out.println("mensaje "+mensaje);
-		System.out.println("posiciones  "+posiciones);
 		
-		
-		//RepeticiOn innecesaria (mete nuevo contexto a la conversaciOn)
 		input = new InputData.Builder(conversationMsg).build();
         options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
-        
-        assistantResponse = service.message(options).execute();    
+        assistantResponse = service.message(options).execute();  
 
-		// Print the output from dialog, iif any.
+		JSONObject object = terminarOperacion(assistantResponse);
+		return Response.status(Status.OK).entity(object.toString()).build();
+	}
+	
+	
+	private JSONObject terminarOperacion(MessageResponse assistantResponse) {
 		List<String> assistantResponseList = assistantResponse.getOutput().getText();
 		JSONObject object = new JSONObject();
 		
@@ -182,7 +160,45 @@ public class ChatService {
 		object.put("response", assistantResponseText);
 		object.put("context", assistantResponse.getContext());
 		
-		return Response.status(Status.OK).entity(object.toString()).build();
+		return object;
+	}
+	
+	private Assistant getService(String conversationMsg,String conversationCtx) {
+		IamOptions iAmOptions = new IamOptions.Builder()
+			.apiKey(apiKey)
+		    .build();
+		Assistant service = new Assistant("2018-09-20", iAmOptions);
+		service.setEndPoint(assistantURL);
+		return service;
+	}
+	
+	private Context getContext(String conversationCtx) {
+		JSONObject ctxJsonObj = new JSONObject(conversationCtx);
+		Context context = new Context();
+		context.putAll(ctxJsonObj.toMap());
+		return context;
+	}
+	
+	private MessageResponse getAsistant(Assistant service,String conversationMsg,Context context) {
+		
+		InputData input = new InputData.Builder(conversationMsg).build();
+		MessageOptions options = new MessageOptions.Builder(workspaceId).input(input).context(context).build();
+		MessageResponse assistantResponse = service.message(options).execute();
+		return assistantResponse;
+	}
+	
+	private boolean validarMensajeIncompleto(String terminado, String operacionCompleta) {
+		if(terminado != null && operacionCompleta == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean validarMensajeCompleto(String terminado, String operacionCompleta) {
+		if(terminado != null && operacionCompleta != null) {
+			return true;
+		}
+		return false;
 	}
 	
 	private String eliminarFinal(String pMensaje) {
@@ -219,6 +235,10 @@ public class ChatService {
 	
 	private String filtrarLlave(String pLlave) {
 		
+		if(pLlave == null) {
+			return "";
+		}
+		
 		Matcher matcher = Pattern.compile(" \"(.*?)\"").matcher(pLlave);
 		 if (matcher.find()){
 			 return matcher.group(1);
@@ -230,7 +250,7 @@ public class ChatService {
 		
 		ICifrado nuevo;
 		Mensaje mensaje = new Mensaje(pLista.get(2));
-		
+		System.out.println(pLista.get(2));
 
 		switch(pLista.get(3)) {
 		  case "MensajeInverso":
@@ -254,8 +274,7 @@ public class ChatService {
 			nuevo.cifrar(mensaje);
 			break;
 		  case "césar":
-			System.out.println(pLista.get(6)+ "ARAJO");
-			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
+			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6).getClass().getTypeName()));
 			nuevo.cifrar(mensaje);
 			break;
 		  case "vigenére":
@@ -265,7 +284,7 @@ public class ChatService {
 		  default:
 		    // code block
 		}
-			
+		System.out.println(mensaje.getMensajeCifrado());	
 		return mensaje.getMensajeCifrado();
 		
 	}
@@ -298,6 +317,7 @@ public class ChatService {
 		  case "llave":
 			System.out.println("Entro");
 			nuevoDescifrado = new PorLlave(pLista.get(4));
+			System.out.println(pLista.get(4));
 			nuevoDescifrado.descifrar(mensaje);
 			System.out.println(mensaje.getMensajeDescifrado());
 			break;
@@ -316,16 +336,5 @@ public class ChatService {
 	  return mensaje.getMensajeDescifrado();
 		
 	}
-	
-	private String obtenerEntidad(List<RuntimeEntity> pEntidades,String pNombre) {
-        String entidad="";
-        for (int i = 0; i < pEntidades.size(); i++) {
-            if(pEntidades.get(i).getEntity().equalsIgnoreCase(pNombre)) {
-                entidad+= pEntidades.get(i).getValue();
-                i= pEntidades.size();
-            }
-        }
-        return entidad;
-    }
 		
 }
