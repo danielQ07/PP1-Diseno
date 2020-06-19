@@ -6,10 +6,9 @@ import logicadenogocios.ICifrado;
 
 public class SimpleCifradoFactory {
 
-	public ICifrado crearCifradoDescirado(String pType, String subType,Object parametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public ICifrado crearCifradoDescifrado(String pType, String subType,Object parametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
 		ICifrado iCifrado;
-		
 		if(subType == null) {
 			iCifrado = (ICifrado) Class.forName("logicadenogocios."+pType).newInstance();
 			return iCifrado;
