@@ -88,7 +88,7 @@ public class AplPrueba {
    
     
     SimpleCifradoFactory nuevoo = new SimpleCifradoFactory();
-    ICifrado aa = nuevoo.crearCifradoDescirado("PorLLave", "","Tango");
+    ICifrado aa = nuevoo.crearCifradoDescirado("SustitucionCesar", "", 3);
     aa.cifrar(mensaje5);
     System.out.println(mensaje5.getMensajeCifrado());
   }

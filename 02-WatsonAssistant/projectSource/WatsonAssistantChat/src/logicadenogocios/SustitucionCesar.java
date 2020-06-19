@@ -4,9 +4,9 @@ import util.ConversionAscii;
 
 public class SustitucionCesar implements ICifrado {
 	
-	private int cantidadPosiciones;
+	private Integer cantidadPosiciones;
 	
-	public SustitucionCesar(int pCantidadPosiciones) {
+	public SustitucionCesar(Integer pCantidadPosiciones) {
 		this.cantidadPosiciones = pCantidadPosiciones;
 	}
 	
