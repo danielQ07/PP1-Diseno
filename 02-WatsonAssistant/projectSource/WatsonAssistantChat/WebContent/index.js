@@ -94,7 +94,7 @@ class SendMessageForm extends React.Component {
                 <input
                     onChange={this.handleChange}
                     value={this.state.message}
-                    placeholder="Type your message and hit ENTER"
+                    placeholder="Escriba el mensaje y presione ENTER "
                     type="text" />
             </form>
         )
@@ -102,7 +102,7 @@ class SendMessageForm extends React.Component {
 }
 
 function Title() {
-  return <p className="title">Simple chat app (For IBM cloud deploy)</p>
+  return <p className="title">WatsonAssistantChat Diseño-2020</p>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

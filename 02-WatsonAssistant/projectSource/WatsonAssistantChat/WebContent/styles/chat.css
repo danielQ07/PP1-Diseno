@@ -1,7 +1,7 @@
 :root {
-    --main-color: #FF5D33;
+    --main-color: #5833FF ;
     --secondary-color: white;
-    --main-text-color: #3e5869;
+    --main-text-color: #F3F9EF;
     --secondary-text-color: #b0c7d6;
     --send-message-form: #F5F5F5;
 }
@@ -85,5 +85,5 @@ html, body {
 }
 
 .send-message-form input::placeholder {
-    color: black;
+    color: blue;
 }
