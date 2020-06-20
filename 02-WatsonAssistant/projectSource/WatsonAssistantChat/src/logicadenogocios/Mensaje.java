@@ -2,7 +2,12 @@ package logicadenogocios;
 
 
 
-
+/**
+ * Clase Mensaje que contiene los atributos y
+ * métodos necesarios.
+ * @author Oscar y Daniel
+ *
+ */
 public class Mensaje {
 	
   private String mensajeViejo;

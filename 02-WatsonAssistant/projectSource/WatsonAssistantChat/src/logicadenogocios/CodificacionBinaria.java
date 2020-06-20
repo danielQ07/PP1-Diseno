@@ -4,23 +4,32 @@ import util.ConversionAscii;
 
 
 /**
- * Clase codificación binaria la cual
+ * Clase CodificaciónBinaria la cual
  * contiene los atributos y métodos necesarios.
  * 
  * @author Oscar y Daniel
  */
 public class CodificacionBinaria implements ICifrado {
 	
+  /**
+   * Método que permite realizar la función
+   * de cifrar el mensaje.
+   */
   public Mensaje cifrar(Mensaje pMensaje) {
     pMensaje.setMensajeCifrado(textoBinario(pMensaje.getMensajeViejo()));	
     return pMensaje;
   }
+  
 	
-	
+  /**
+   * Método que permite realizar la función
+   * de descifrar el mensaje.
+   */
   public Mensaje descifrar(Mensaje pMensaje) {
     pMensaje.setMensajeDescifrado(binarioTexto(pMensaje.getMensajeCifrado()));
     return pMensaje;
   }
+  
 	
   private String cambiarCaracterBinario(int pValorLetra) {		
     String letraConvertida;

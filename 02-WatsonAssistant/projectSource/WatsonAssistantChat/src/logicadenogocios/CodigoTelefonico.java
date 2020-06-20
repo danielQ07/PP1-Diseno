@@ -5,7 +5,8 @@ import util.ConversionAscii;
 
 
 /**
- * 
+ * Clase CodigoTelefonico que contiene los 
+ * atributos y métodos necesarios
  * @author Oscar y Daniel
  *
  */
@@ -13,6 +14,10 @@ public class CodigoTelefonico implements ICifrado{
 
   public ArrayList<ArrayList<Character>> alfabeto = asignarAlfabeto();
   
+  /**
+   * Método que permite realizar la
+   * función de cifra el mensaje.
+   */
   public Mensaje cifrar(Mensaje pMensaje) {	
 	String mensajeEncriptado = "";
 	char[] mensajeSeparado = pMensaje.getMensajeViejo().toCharArray();	
@@ -30,6 +35,10 @@ public class CodigoTelefonico implements ICifrado{
 	}
   
   
+  /**
+   * Método que permite realizar la
+   * función de descifra el mensaje.
+   */
   public Mensaje descifrar(Mensaje pMensaje) {
     String mensajeDesencriptado = "";
     String[] mensajeSeparado = pMensaje.getMensajeCifrado().split(" ");
