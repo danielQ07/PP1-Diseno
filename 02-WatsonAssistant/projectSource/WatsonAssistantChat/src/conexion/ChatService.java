@@ -134,7 +134,7 @@ public class ChatService {
   
 	
   private String filtarEncontradoTextoCompleto(ArrayList<String> filtro) {
-    if(filtro.get(0) != null) {
+    if(!filtro.get(0).equals("")) {
 	  String llaveExtraida = filtrarLlave(filtro.get(0));
 	  return llaveExtraida; // 3 para la llave
 	} else if(!filtro.get(1).equals("")) {
