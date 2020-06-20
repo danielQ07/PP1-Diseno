@@ -1,53 +1,32 @@
 package conexion;
 
-import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
 import org.json.JSONObject;
-
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.BasicAuthenticator;
-import com.ibm.cloud.sdk.core.security.IamAuthenticator;
-
 import com.ibm.watson.developer_cloud.assistant.v1.Assistant;
 import com.ibm.watson.developer_cloud.assistant.v1.model.Context;
 import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
-import com.ibm.watson.developer_cloud.assistant.v1.model.RuntimeEntity;
-import com.ibm.watson.developer_cloud.assistant.v2.model.MessageInputOptions;
-import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
-
-import logicadenogocios.CodificacionBinaria;
-import logicadenogocios.CodigoTelefonico;
+import logicadeinstanciacion.ControladorCifradoDescifrado;
+import logicadeinstanciacion.SimpleCifradoFactory;
 import logicadenogocios.ICifrado;
 import logicadenogocios.Mensaje;
-import logicadenogocios.MensajeInverso;
-import logicadenogocios.PalabraInversa;
-import logicadenogocios.PorLlave;
-import logicadenogocios.SustitucionCesar;
-import logicadenogocios.Vigenere;
+
 
 @Path("/chatservice")
 public class ChatService {
 
-	private String urlDB;
-	private String userDB;
-	private String passwordDB;
 	private String apiKey = "fOXpM_sJMpW1iEu8GiLFj_ygAfRYdCDZREb2fKoWBDOF";
 	private String assistantURL = "https://api.us-south.assistant.watson.cloud.ibm.com/instances/71acf5a8-b786-4a4e-968d-058d5044dc80" ;
 	private static String workspaceId = "6165712a-44c1-4f61-b215-1ec03809a760";
@@ -75,7 +54,6 @@ public class ChatService {
 		MessageResponse assistantResponse = getAsistant(service,conversationMsg, context);
 		
 		//obtener todas las variables de context del watson
-		String tipoEscogido = (String) context.get("tipoCifradoDescifrado");
 		String tipoOperacion = (String) context.get("tipoOperacion");
 		String mensaje = (String) context.get("mensajeNormal");
 		String llave = (String) context.get("llave");
@@ -87,59 +65,43 @@ public class ChatService {
 		String terminado = (String) context.get("terminado");
 		String validarInstanciacion = (String) context.get("validarInstanciacion");
 
+		ArrayList<String> nuevo = new ArrayList<String>();
+		ArrayList<String> validacionFiltro = new ArrayList<String>();
 		
 		if(validarMensajeIncompleto(terminado,operacionCompleta)) {
-			
-			System.out.println("ENTRO if");
-			
-			ArrayList<String> nuevo = new ArrayList<String>();
-			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
-			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
-			nuevo.add(mensaje); // 2 para el mensaje
-			nuevo.add(subtipo); // 3 para el subtipo
-			nuevo.add(llave); // 4 para la llave
-			nuevo.add(cifra); // 5 para la cifra
-			nuevo.add(posiciones); // 6 para la cantiadPosiciones
-			nuevo.add(validarInstanciacion); //7 para validar la instanciacion
 
-			if(tipoOperacion.equals("cifrado")) {
-				System.out.println("ENTRO CIFRADO incompleto");
-				context.put("mensajeCifrado",llamarCifrado(nuevo));
-			}
-			if(tipoOperacion.equals("descifrado")) {
-				System.out.println("ENTRO desCIFRADO incompleto");
-				context.put("mensajeDescifrado",llamarDescifrado(nuevo));
-			}
+			nuevo.add(mensaje); // 0 para el mensaje
+			nuevo.add(validarInstanciacion); //1 para validar la instanciacion
+			nuevo.add(subtipo); // 2 para el subtipo
+			
+			//añade al array para validar el tipo de sustitucion
+			validacionFiltro.add(llave);
+			validacionFiltro.add(cifra);
+			validacionFiltro.add(posiciones);
+			
+			nuevo.add(filtarEncontradoTextoInompleto(validacionFiltro));//3
+			nuevo.add(ingresarBandera(nuevo.get(3))); //4
+			
+			ejecutarTipoOperacion(tipoOperacion,context,nuevo);
+
 			
 		}else if(validarMensajeCompleto(terminado,operacionCompleta)){
 
-			ArrayList<String> nuevo = new ArrayList<String>();
-			nuevo.add(tipoEscogido); // 0 para reconocer el tipo
-			nuevo.add(tipoOperacion); // 1 para reconocer cifrado o descifrado
-			
 			msjcompleto = eliminarFinal(msjcompleto);
+			nuevo.add(msjcompleto); // 0 para el mensaje
+			nuevo.add(validarInstanciacion); //1 para validar la instanciacion
+			nuevo.add(subtipo); // 2 para el subtipo
 			
-			nuevo.add(msjcompleto); // 2 para el mensaje
-			nuevo.add(subtipo); // 3 para el subtipo
+			String numeroEncontrado = mensaje.replaceAll("\\D+","");
 			
-			String llaveExtraida = filtrarLlave(llave);
+			//añade al array para validar el tipo de sustitucion
+			validacionFiltro.add(llave);
+			validacionFiltro.add(numeroEncontrado);
 			
-			nuevo.add(llaveExtraida); // 4 para la llave
-			String cifraEncontrada = mensaje.replaceAll("\\D+","");
-			nuevo.add(cifraEncontrada); // 5 para la cifra
+			nuevo.add(filtarEncontradoTextoCompleto(validacionFiltro));//3
+			nuevo.add(ingresarBandera(nuevo.get(3))); //4
 			
-			String posicionesEncotradas = mensaje.replaceAll("\\D+","");
-
-			nuevo.add(posicionesEncotradas);
-			
-			if(tipoOperacion.equals("cifrado")) {
-				System.out.println("ENTRO CIFRADO");
-				context.put("mensajeCifrado",llamarCifrado(nuevo));
-			}
-			if(tipoOperacion.equals("descifrado")) {
-				System.out.println("ENTRO DESCIFRADO");
-			    context.put("mensajeDescifrado",llamarDescifrado(nuevo));
-			}
+			ejecutarTipoOperacion(tipoOperacion,context,nuevo);
 		}
 		
 		input = new InputData.Builder(conversationMsg).build();
@@ -150,6 +112,45 @@ public class ChatService {
 		return Response.status(Status.OK).entity(object.toString()).build();
 	}
 	
+	private String filtarEncontradoTextoInompleto(ArrayList<String> filtro) {
+		if(filtro.get(0) != null) {
+			return filtro.get(0);
+		}else if(filtro.get(1) != null) {
+			return filtro.get(1);
+		}else if(filtro.get(2) != null) {
+			return filtro.get(2);
+		}
+		return "sin valor";
+		
+	}
+	
+	private String ingresarBandera(String bandera) {
+		try {
+			Integer numero = Integer.parseInt(bandera);
+			return "int";
+		}catch(NumberFormatException e) {
+			return "str";
+		}
+	}
+	
+	private String filtarEncontradoTextoCompleto(ArrayList<String> filtro) {
+		if(filtro.get(0) != null) {
+			String llaveExtraida = filtrarLlave(filtro.get(0));
+			return llaveExtraida; // 3 para la llave
+		}else if(!filtro.get(1).equals("")) {
+			return filtro.get(1); // 3 para el numero
+		}
+		return "sin valor";
+		
+	}
+	
+	private void ejecutarTipoOperacion(String pTipoOperacion,Context pContext, ArrayList<String> pNuevo) {
+		if(pTipoOperacion.equals("cifrado")) {
+			pContext.put("mensajeCifrado",llamarCifrado(pNuevo));
+			return;
+		}
+		pContext.put("mensajeDescifrado",llamarDescifrado(pNuevo));
+	}
 	
 	private JSONObject terminarOperacion(MessageResponse assistantResponse) {
 		List<String> assistantResponseList = assistantResponse.getOutput().getText();
@@ -248,94 +249,68 @@ public class ChatService {
 		 return "";
 	}
 	
-	private String llamarCifrado(ArrayList<String> pLista) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private String llamarCifrado(ArrayList<String> pLista) {
 		
-		ICifrado nuevo;
-		Mensaje mensaje = new Mensaje(pLista.get(2));
-		System.out.println(pLista.get(2));
+		ICifrado nuevo = null;
+		Mensaje mensaje = new Mensaje(pLista.get(0));
+		
+		SimpleCifradoFactory factoryNuevo = new SimpleCifradoFactory();
+		ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(factoryNuevo);
 
-		switch(pLista.get(3)) {
-		  case "MensajeInverso":
-		    nuevo = new MensajeInverso();
-		    nuevo.cifrar(mensaje);
-		    break;
-		  case "CodificacionBinaria":
-			nuevo = new CodificacionBinaria();
+		if(pLista.get(4).equals("int")) {
+			try {
+				nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
 			nuevo.cifrar(mensaje);
-		    break;
-		  case "CodigoTelefonico":
-			nuevo = new CodigoTelefonico();
-			nuevo.cifrar(mensaje);
-			break;
-		  case "PalabraInversa":
-			nuevo = new PalabraInversa();
-			nuevo.cifrar(mensaje);
-			break;
-		  case "PorLlave":
-			nuevo = new PorLlave(pLista.get(4));
-			nuevo.cifrar(mensaje);
-			break;
-		  case "SustitucionCesar":
-			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
-			nuevo.cifrar(mensaje);
-			break;
-		  case "Vigenere":
-			nuevo = new Vigenere(Integer.parseInt(pLista.get(5)));
-			nuevo.cifrar(mensaje);
-			break;
-		  default:
-		    // code block
+			return mensaje.getMensajeCifrado();
 		}
-		System.out.println(mensaje.getMensajeCifrado());	
+		
+		
+		try {
+			nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3));
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		nuevo.cifrar(mensaje);
 		return mensaje.getMensajeCifrado();
 		
 	}
 	
 	private String llamarDescifrado(ArrayList<String> pLista)  {
-	  ICifrado nuevoDescifrado;
-	  Mensaje mensaje = new Mensaje(pLista.get(2));
-	  mensaje.setMensajeCifrado(pLista.get(2));
-	  System.out.println("PRINT GET2 "+ pLista.get(2));
-	  
-	  switch (pLista.get(3)) {
-	     case "MensajeInverso":
-	    	nuevoDescifrado = new MensajeInverso();
-	    	nuevoDescifrado.descifrar(mensaje);
-		    break;
-		  case "codigo binario":
-			  System.out.println("BINARIAA");
-			nuevoDescifrado = new CodificacionBinaria();
-			nuevoDescifrado.descifrar(mensaje);
-			System.out.println(mensaje.getMensajeDescifrado());
-		    break;
-		  case "código telefónico":
-			nuevoDescifrado = new CodigoTelefonico();
-			nuevoDescifrado.descifrar(mensaje);
-			break;
-		  case "PalabraInversa":
-			nuevoDescifrado = new PalabraInversa();
-			nuevoDescifrado.descifrar(mensaje);
-			break;
-		  case "llave":
-			System.out.println("Entro");
-			nuevoDescifrado = new PorLlave(pLista.get(4));
-			System.out.println(pLista.get(4));
-			nuevoDescifrado.descifrar(mensaje);
-			System.out.println(mensaje.getMensajeDescifrado());
-			break;
-		  case "césar":
-			nuevoDescifrado = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
-			nuevoDescifrado.descifrar(mensaje);
-			break;
-		  case "vigenére":
-			nuevoDescifrado = new Vigenere(Integer.parseInt(pLista.get(5)));
-			nuevoDescifrado.descifrar(mensaje);
-			break;
-		  default:
-	  
-	  }
-	  System.out.println(mensaje.getMensajeDescifrado());
-	  return mensaje.getMensajeDescifrado();
+		
+		ICifrado nuevo = null;
+		Mensaje mensaje = new Mensaje(pLista.get(0));
+		mensaje.setMensajeCifrado(pLista.get(0));
+
+		
+		SimpleCifradoFactory factoryNuevo = new SimpleCifradoFactory();
+		ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(factoryNuevo);
+
+		
+		if(pLista.get(4).equals("int")) {
+			try {
+				nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+;
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
+			nuevo.descifrar(mensaje);
+			return mensaje.getMensajeDescifrado();
+		}
+	
+		try {
+			nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1),(String)pLista.get(3));
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		nuevo.descifrar(mensaje);
+		return mensaje.getMensajeDescifrado();
 		
 	}
 		
