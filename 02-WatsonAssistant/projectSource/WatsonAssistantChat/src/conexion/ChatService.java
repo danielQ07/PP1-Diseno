@@ -79,17 +79,22 @@ public class ChatService {
 	String validarInstanciacion = (String) context.get("validarInstanciacion");
 	ArrayList<String> nuevo = new ArrayList<String>();
 	ArrayList<String> validacionFiltro = new ArrayList<String>();
+	
+	System.out.println(terminado);
+	System.out.println(operacionCompleta);
+	
 	if(validarMensajeIncompleto(terminado,operacionCompleta)) {
-	nuevo.add(mensaje); // 0 para el mensaje
-	nuevo.add(validarInstanciacion); //1 para validar la instanciacion
-	nuevo.add(subtipo); // 2 para el subtipo	
-	//En esta parte se añaden al array para validar el tipo de sustitucion
-	validacionFiltro.add(llave);
-	validacionFiltro.add(cifra);
-	validacionFiltro.add(posiciones);
-	nuevo.add(filtarEncontradoTextoInompleto(validacionFiltro));//3
-	nuevo.add(ingresarBandera(nuevo.get(3))); //4
-	ejecutarTipoOperacion(tipoOperacion,context,nuevo);	
+	  nuevo.add(mensaje); // 0 para el mensaje
+	  nuevo.add(validarInstanciacion); //1 para validar la instanciacion
+	  nuevo.add(subtipo); // 2 para el subtipo	
+	  //En esta parte se añaden al array para validar el tipo de sustitucion
+	  validacionFiltro.add(llave);
+	  validacionFiltro.add(cifra);
+	  validacionFiltro.add(posiciones);
+	  nuevo.add(filtarEncontradoTextoIncompleto(validacionFiltro));//3
+	  nuevo.add(ingresarBandera(nuevo.get(3))); //4
+	  ejecutarTipoOperacion(tipoOperacion,context,nuevo);	
+	
 	}else if(validarMensajeCompleto(terminado,operacionCompleta)){
 	   msjcompleto = eliminarFinal(msjcompleto);
 	   nuevo.add(msjcompleto); // 0 para el mensaje
@@ -97,6 +102,10 @@ public class ChatService {
 	   nuevo.add(subtipo); // 2 para el subtipo	
 	   String numeroEncontrado = mensaje.replaceAll("\\D+","");	
 	   //añade al array para validar el tipo de sustitucion
+	   
+	   System.out.println("llave "+ llave);
+	   System.out.println("numeroEncontrado "+numeroEncontrado);
+	   
 	   validacionFiltro.add(llave);
 	   validacionFiltro.add(numeroEncontrado);	
 	   nuevo.add(filtarEncontradoTextoCompleto(validacionFiltro));//3
@@ -111,7 +120,7 @@ public class ChatService {
   }
 	
 	
-  private String filtarEncontradoTextoInompleto(ArrayList<String> filtro) {
+  private String filtarEncontradoTextoIncompleto(ArrayList<String> filtro) {
 	if(filtro.get(0) != null) {
 	  return filtro.get(0);
 	} else if(filtro.get(1) != null) { 
@@ -134,12 +143,15 @@ public class ChatService {
   
 	
   private String filtarEncontradoTextoCompleto(ArrayList<String> filtro) {
-    if(!filtro.get(0).equals("")) {
+    if(!filtro.get(0).equals("") && filtro.get(0) != null){
+    	System.out.println("here");
 	  String llaveExtraida = filtrarLlave(filtro.get(0));
+	  System.out.println("here2");
 	  return llaveExtraida; // 3 para la llave
-	} else if(!filtro.get(1).equals("")) {
-	    return filtro.get(1); // 3 para el numero
-	  }
+	}else if(!filtro.get(1).equals("")) {
+	  return filtro.get(1); // 3 para el numero
+	}
+    System.out.println("her3");
 	return "sin valor";	
   }
 	
@@ -272,6 +284,7 @@ public class ChatService {
 	ICifrado nuevo = null;
 	Mensaje mensaje = new Mensaje(pLista.get(0));
 	mensaje.setMensajeCifrado(pLista.get(0));
+	
 	SimpleCifradoFactory factoryNuevo = new SimpleCifradoFactory();
 	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(factoryNuevo);
 	  if(pLista.get(4).equals("int")) {
