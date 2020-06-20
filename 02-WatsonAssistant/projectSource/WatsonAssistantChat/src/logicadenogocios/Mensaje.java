@@ -1,5 +1,8 @@
 package logicadenogocios;
 
+
+
+
 public class Mensaje {
 	
   private String mensajeViejo;
@@ -8,36 +11,28 @@ public class Mensaje {
   
   
   public Mensaje(String pMensajeViejo) {
- 
-	  mensajeViejo = pMensajeViejo;  
-	  
+    mensajeViejo = pMensajeViejo;    
   }
   
   public String getMensajeViejo() {
-
     return mensajeViejo;
   }
   
   public String getMensajeCifrado() {
-
     return mensajeCifrado;
   }
   
   public void setMensajeCifrado(String pMensajeCifrado) {
-	  
-	  mensajeCifrado = pMensajeCifrado; 
+	mensajeCifrado = pMensajeCifrado; 
   }
   
   public void setMensajeDescifrado(String pMensajeDescifrado) {
-	  
-	  mensajeDescifrado = pMensajeDescifrado; 
+	mensajeDescifrado = pMensajeDescifrado; 
   }
   
   public String getMensajeDescifrado() {
-
     return mensajeDescifrado;
   }
   
   
-
 }

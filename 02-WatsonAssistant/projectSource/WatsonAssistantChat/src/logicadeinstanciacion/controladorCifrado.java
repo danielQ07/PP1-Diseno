@@ -10,10 +10,9 @@ public class controladorCifrado {
   
   public controladorCifrado(SimpleCifradoFactory pFabrica) {
   	fabrica = pFabrica;  
-	  
   }
   
-  public ICifrado crearCifradoDescifrado(String pTipo, String subTipo, Object parametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+  public ICifrado realizarCifradoDescifrado(String pTipo, String subTipo, Object parametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     ICifrado cifrado;
     cifrado = fabrica.crearCifradoDescifrado(pTipo, subTipo, parametro);
     return cifrado;
