@@ -1,14 +1,13 @@
 package logicadeinstanciacion;
 
 import java.lang.reflect.InvocationTargetException;
-
 import logicadenogocios.ICifrado;
 
-public class controladorCifrado {
+public class ControladorCifrado {
 	
   private SimpleCifradoFactory fabrica;
   
-  public controladorCifrado(SimpleCifradoFactory pFabrica) {
+  public ControladorCifrado(SimpleCifradoFactory pFabrica) {
   	fabrica = pFabrica;  
   }
   

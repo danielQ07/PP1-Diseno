@@ -6,15 +6,15 @@ import logicadenogocios.ICifrado;
 
 public class SimpleCifradoFactory {
 
-	public ICifrado crearCifradoDescifrado(String pType, String subType,Object parametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public ICifrado crearCifradoDescifrado(String pType, String pSubType,Object pParametro) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
 		ICifrado iCifrado;
-		if(subType == null) {
+		if(pSubType == null) {
 			iCifrado = (ICifrado) Class.forName("logicadenogocios."+pType).newInstance();
 			return iCifrado;
 		}
-		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor(parametro.getClass());
-		iCifrado = (ICifrado) construc.newInstance(parametro);
+		Constructor construc = Class.forName("logicadenogocios."+pType).getConstructor(pParametro.getClass());
+		iCifrado = (ICifrado) construc.newInstance(pParametro);
 		return iCifrado;
 		
 	}

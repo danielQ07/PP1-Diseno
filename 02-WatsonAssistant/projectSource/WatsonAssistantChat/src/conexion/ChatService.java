@@ -259,11 +259,11 @@ public class ChatService {
 		    nuevo = new MensajeInverso();
 		    nuevo.cifrar(mensaje);
 		    break;
-		  case "codificación binaria":
+		  case "CodificacionBinaria":
 			nuevo = new CodificacionBinaria();
 			nuevo.cifrar(mensaje);
 		    break;
-		  case "código telefónico":
+		  case "CodigoTelefonico":
 			nuevo = new CodigoTelefonico();
 			nuevo.cifrar(mensaje);
 			break;
@@ -271,15 +271,15 @@ public class ChatService {
 			nuevo = new PalabraInversa();
 			nuevo.cifrar(mensaje);
 			break;
-		  case "llave":
+		  case "PorLlave":
 			nuevo = new PorLlave(pLista.get(4));
 			nuevo.cifrar(mensaje);
 			break;
-		  case "césar":
-			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6).getClass().getTypeName()));
+		  case "SustitucionCesar":
+			nuevo = new SustitucionCesar(Integer.parseInt(pLista.get(6)));
 			nuevo.cifrar(mensaje);
 			break;
-		  case "vigenére":
+		  case "Vigenere":
 			nuevo = new Vigenere(Integer.parseInt(pLista.get(5)));
 			nuevo.cifrar(mensaje);
 			break;
