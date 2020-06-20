@@ -14,7 +14,10 @@ public class Mensaje {
   private String mensajeCifrado;
   private String mensajeDescifrado;
   
-  
+  /**
+   * Constructor de la clase Mensaje.
+   * @param pMensajeViejo
+   */
   public Mensaje(String pMensajeViejo) {
     mensajeViejo = pMensajeViejo;    
   }

@@ -49,8 +49,7 @@ public class ChatService {
 	
 	/**
 	 * Método que recibe la respuesta del servidor
-	 * de Watson, establece las variables necesarias y
-	 * las valida.
+	 * de Watson establece las variables necesarias.
 	 * @param conversationMsg
 	 * @param conversationCtx
 	 * @return
@@ -58,6 +57,8 @@ public class ChatService {
 	 * @throws IllegalAccessException
 	 * @throws ClassNotFoundException
 	 */
+	@GET
+	@Produces("application/json")
   public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") 
     String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {	
 	Assistant service = getService( conversationMsg, conversationCtx);
@@ -257,7 +258,7 @@ public class ChatService {
 	 return mensaje.getMensajeCifrado();
 	}	
 	try {
-	  nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3));
+	  nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3)); ;
 	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
 		| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 		e.printStackTrace();
