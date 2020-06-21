@@ -17,6 +17,10 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import logicadeinstanciacion.ControladorCifradoDescifrado;
+
+
+
+
 @Path("/chatservice")
 /**
  * Clase ChatService que sirve para establecer
@@ -251,22 +255,14 @@ public class ChatService {
   
 	
   private String llamarCifrado(ArrayList<String> pLista) {	
-	  
 	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado();
-		
-   	return controlador.ejecutarCifrado(pLista);
-		
+   	return controlador.ejecutarCifrado(pLista);	
   }
 	
   
   private String llamarDescifrado(ArrayList<String> pLista)  {	
-	  
-
-	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado();
-	  
+	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(); 
 	return controlador.ejecutarDescifrado(pLista);
-	
-	
   }
 
 		
