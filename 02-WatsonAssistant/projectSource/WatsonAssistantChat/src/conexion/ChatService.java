@@ -72,11 +72,11 @@ public class ChatService {
 	String operacionCompleta = (String) context.get("operacionCompleta");
 	String terminado = (String) context.get("terminado");
 	String validarInstanciacion = (String) context.get("validarInstanciacion");
+	String correo = (String) context.get("correo");
+	
 	ArrayList<String> nuevo = new ArrayList<String>();
 	ArrayList<String> validacionFiltro = new ArrayList<String>();
 	
-	System.out.println(terminado);
-	System.out.println(operacionCompleta);
 	
 	if(validarMensajeIncompleto(terminado,operacionCompleta)) {
 	  nuevo.add(mensaje); // 0 para el mensaje
@@ -90,9 +90,10 @@ public class ChatService {
 	  
 	  nuevo.add(filtarEncontradoTextoIncompleto(validacionFiltro));//3
 	  nuevo.add(ingresarBandera(nuevo.get(3))); //4
+	  nuevo.add(prueba(assistantResponse.toString()));//5 correo
+	  
 	  ejecutarTipoOperacion(tipoOperacion,context,nuevo);	
 	
-	  
 	  
 	  
 	}else if(validarMensajeCompleto(terminado,operacionCompleta)){
@@ -109,7 +110,9 @@ public class ChatService {
 	   validacionFiltro.add(llave);
 	   validacionFiltro.add(numeroEncontrado);	
 	   nuevo.add(filtarEncontradoTextoCompleto(validacionFiltro));//3
-	   nuevo.add(ingresarBandera(nuevo.get(3))); //4	
+	   nuevo.add(ingresarBandera(nuevo.get(3))); //4
+	   nuevo.add(prueba(assistantResponse.toString()));//5 correo
+	   
 	   ejecutarTipoOperacion(tipoOperacion,context,nuevo);
 	 }	
 	 input = new InputData.Builder(conversationMsg).build();
@@ -119,6 +122,17 @@ public class ChatService {
 	 return Response.status(Status.OK).entity(object.toString()).build();
   }
 	
+	
+  private String prueba(String response) {
+	  try {
+	    JSONObject obj = new JSONObject(response);
+	    String correo = obj.getJSONObject("context").getString("correo");
+	    return correo;
+	  } catch(Exception e) {
+		  return null;
+	  }
+	  
+  }
 	
   private String filtarEncontradoTextoIncompleto(ArrayList<String> filtro) {
     for(String posicion: filtro) {
@@ -142,14 +156,11 @@ public class ChatService {
 	
   private String filtarEncontradoTextoCompleto(ArrayList<String> filtro) {
     if(filtro.get(0) != null && !filtro.get(0).equals("")){
-    	System.out.println("here");
 	  String llaveExtraida = filtrarLlave(filtro.get(0));
-	  System.out.println("here2");
 	  return llaveExtraida; // 3 para la llave
 	}else if(!filtro.get(1).equals("")) {
 	  return filtro.get(1); // 3 para el numero
 	}
-    System.out.println("her3");
 	return "sin valor";	
   }
 	
@@ -254,7 +265,7 @@ public class ChatService {
 	
   private String llamarCifrado(ArrayList<String> pLista) {	
 	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado();
-   	return controlador.ejecutarCifrado(pLista);	
+   	return controlador.ejecutarCifrado(pLista);
   }
 	
   

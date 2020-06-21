@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import logicadenegocios.ICifrado;
 import logicadenegocios.Mensaje;
+import util.EnvioMensajes;
 
 
 
@@ -52,6 +53,9 @@ public class ControladorCifradoDescifrado {
 	    e.printStackTrace();
 	   }
 	  strategy.cifrar(mensaje);
+	  if(pLista.get(5) != null) {
+		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeCifrado());
+	  }
 	  return mensaje.getMensajeCifrado();
 	}	
 	try {
@@ -61,6 +65,9 @@ public class ControladorCifradoDescifrado {
 	  e.printStackTrace();
 	}
    strategy.cifrar(mensaje);
+   if(pLista.get(5) != null) {
+		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeCifrado());
+	}
    return mensaje.getMensajeCifrado();	
   }
   
@@ -75,6 +82,9 @@ public class ControladorCifradoDescifrado {
 	     e.printStackTrace();
 	   }
 	   strategy.descifrar(mensaje);
+	   if(pLista.get(5) != null) {
+	     enviarCorreo(pLista.get(5),"Mensaje descodificado: "+mensaje.getMensajeDescifrado());
+	   }
 	   return mensaje.getMensajeDescifrado();
 	 }
 	 try {
@@ -84,7 +94,18 @@ public class ControladorCifradoDescifrado {
 		e.printStackTrace();
 	}
 	strategy.descifrar(mensaje);
+	if(pLista.get(5) != null) {
+		enviarCorreo(pLista.get(5),"Mensaje descodificado: "+mensaje.getMensajeDescifrado());
+	}
 	return mensaje.getMensajeDescifrado();	
+  }
+  
+  public void enviarCorreo(String pCorreo,String pMensaje) {
+    try {
+	  EnvioMensajes.enviarSms(pCorreo,pMensaje);
+	}catch(Exception e) {
+		System.out.print(e);
+	}
   }
 
 }

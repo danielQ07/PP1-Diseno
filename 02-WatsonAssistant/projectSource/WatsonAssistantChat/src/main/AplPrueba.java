@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import conexion.ChatService;
+import logicadeinstanciacion.ControladorCifradoDescifrado;
 import logicadeinstanciacion.SimpleCifradoFactory;
 import logicadenegocios.CodificacionBinaria;
 import logicadenegocios.CodigoTelefonico;
@@ -15,6 +16,7 @@ import logicadenegocios.PalabraInversa;
 import logicadenegocios.PorLlave;
 import logicadenegocios.SustitucionCesar;
 import logicadenegocios.Vigenere;
+import util.EnvioMensajes;
 
 
 public class AplPrueba {
@@ -92,6 +94,9 @@ public class AplPrueba {
 
     aa.cifrar(mensaje5);
     System.out.println(mensaje5.getMensajeCifrado());
+ 
+    ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(); 
+    controlador.enviarCorreo("danqp071298@gmail.com", "mensaje4");
     
   }
  }	
