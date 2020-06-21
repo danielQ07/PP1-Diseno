@@ -121,14 +121,12 @@ public class ChatService {
 	
 	
   private String filtarEncontradoTextoIncompleto(ArrayList<String> filtro) {
-	if(filtro.get(0) != null) {
-	  return filtro.get(0);
-	} else if(filtro.get(1) != null) { 
-	    return filtro.get(1);
-	  } else if(filtro.get(2) != null) {
-		  return filtro.get(2);
-		}
-	return "sin valor";
+    for(String posicion: filtro) {
+	  if(posicion != null) {
+	    return filtro.get(0);
+	  }
+	}
+    return "sin valor";  
   }
   
 	
