@@ -43,55 +43,48 @@ public class ControladorCifradoDescifrado {
   }
   
   public String ejecutarCifrado(ArrayList<String> pLista) {
-	  
-	  System.out.println(pLista);
-	  Mensaje mensaje = new Mensaje(pLista.get(0));	
-		
-		if(pLista.get(4).equals("int")) {
-		  try {
-			  System.out.println("siuuuu");
-		    strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-		  } catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-			  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			  e.printStackTrace();
-			}
-		  strategy.cifrar(mensaje);
-		 return mensaje.getMensajeCifrado();
-		}	
-		try {
-			strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3)); ;
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-			| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		  }
-		strategy.cifrar(mensaje);
-		return mensaje.getMensajeCifrado();	
+	Mensaje mensaje = new Mensaje(pLista.get(0));	
+	if(pLista.get(4).equals("int")) {
+	  try {
+	    strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+	  } catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+		  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+	    e.printStackTrace();
+	   }
+	  strategy.cifrar(mensaje);
+	  return mensaje.getMensajeCifrado();
+	}	
+	try {
+	  strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3)); ;
+	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+		| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+	  e.printStackTrace();
+	}
+   strategy.cifrar(mensaje);
+   return mensaje.getMensajeCifrado();	
   }
   
   public String ejecutarDescifrado(ArrayList<String> pLista) {
-	  
-
-		Mensaje mensaje = new Mensaje(pLista.get(0));
-		mensaje.setMensajeCifrado(pLista.get(0));
-		
-		  if(pLista.get(4).equals("int")) {
-		    try {
-		    	strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-			  }
-		    strategy.descifrar(mensaje);
-			return mensaje.getMensajeDescifrado();
-		  }
-		  try {
-			  strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1),(String)pLista.get(3));
-		  } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-			  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			  e.printStackTrace();
-			}
-		  strategy.descifrar(mensaje);
-		return mensaje.getMensajeDescifrado();	
+	Mensaje mensaje = new Mensaje(pLista.get(0));
+	mensaje.setMensajeCifrado(pLista.get(0));
+	 if(pLista.get(4).equals("int")) {
+	   try {
+	     strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+	   } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+		  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+	     e.printStackTrace();
+	   }
+	   strategy.descifrar(mensaje);
+	   return mensaje.getMensajeDescifrado();
+	 }
+	 try {
+       strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1),(String)pLista.get(3));
+	 } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+		| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+		e.printStackTrace();
+	}
+	strategy.descifrar(mensaje);
+	return mensaje.getMensajeDescifrado();	
   }
 
 }

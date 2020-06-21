@@ -79,13 +79,18 @@ public class ChatService {
 	  nuevo.add(validarInstanciacion); //1 para validar la instanciacion
 	  nuevo.add(subtipo); // 2 para el subtipo	
 	  //En esta parte se añaden al array para validar el tipo de sustitucion
+	  
 	  validacionFiltro.add(llave);
 	  validacionFiltro.add(cifra);
 	  validacionFiltro.add(posiciones);
+	  
 	  nuevo.add(filtarEncontradoTextoIncompleto(validacionFiltro));//3
 	  nuevo.add(ingresarBandera(nuevo.get(3))); //4
 	  ejecutarTipoOperacion(tipoOperacion,context,nuevo);	
 	
+	  
+	  
+	  
 	}else if(validarMensajeCompleto(terminado,operacionCompleta)){
 	   msjcompleto = eliminarFinal(msjcompleto);
 	   nuevo.add(msjcompleto); // 0 para el mensaje
