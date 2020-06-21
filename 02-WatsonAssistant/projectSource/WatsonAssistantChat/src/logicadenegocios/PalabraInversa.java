@@ -1,5 +1,5 @@
-package logicadenogocios;
-import logicadenogocios.Transposicion;
+package logicadenegocios;
+import logicadenegocios.Transposicion;
 
 
 

@@ -1,6 +1,9 @@
 package logicadeinstanciacion;
 import java.lang.reflect.InvocationTargetException;
-import logicadenogocios.ICifrado;
+import java.util.ArrayList;
+
+import logicadenegocios.ICifrado;
+import logicadenegocios.Mensaje;
 
 
 
@@ -13,17 +16,9 @@ import logicadenogocios.ICifrado;
  */
 public class ControladorCifradoDescifrado {
 	
-  private SimpleCifradoFactory fabrica;
+  private SimpleCifradoFactory fabrica = new SimpleCifradoFactory();
   
-  /**
-   * Constructor de la clase.
-   * @param pFabrica
-   */
-  public ControladorCifradoDescifrado(SimpleCifradoFactory pFabrica) {
-  	fabrica = pFabrica;  
-  }
-  
-  
+  public ControladorCifradoDescifrado() {}
   /**
    * Método que crea el cifrado o el descifrado
    * dependiendo del tipo.
@@ -39,11 +34,62 @@ public class ControladorCifradoDescifrado {
    * @throws NoSuchMethodException
    * @throws SecurityException
    */
-  public ICifrado crearCifradoDescifrado(String pTipo, String subTipo, Object parametro) throws InstantiationException,
+  private ICifrado crearCifradoDescifrado(String pTipo, String subTipo, Object parametro) throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     ICifrado cifrado;
     cifrado = fabrica.crearCifradoDescifrado(pTipo, subTipo, parametro);
     return cifrado;
+  }
+  
+  public String ejecutarCifrado(ArrayList<String> pLista) {
+	  
+	  ICifrado cifrado	= null;
+	  Mensaje mensaje = new Mensaje(pLista.get(0));	
+		
+		if(pLista.get(4).equals("int")) {
+		  try {
+		    cifrado = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+		  } catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+			  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			  e.printStackTrace();
+			}
+		  cifrado.cifrar(mensaje);
+		 return mensaje.getMensajeCifrado();
+		}	
+		try {
+			cifrado = crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3)); ;
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+			| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		  }
+		cifrado.cifrar(mensaje);
+		return mensaje.getMensajeCifrado();	
+  }
+  
+  public String ejecutarDescifrado(ArrayList<String> pLista) {
+	  
+	  ICifrado nuevo = null;
+		Mensaje mensaje = new Mensaje(pLista.get(0));
+		mensaje.setMensajeCifrado(pLista.get(0));
+		
+		  if(pLista.get(4).equals("int")) {
+		    try {
+			  nuevo = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			  }
+			nuevo.descifrar(mensaje);
+			return mensaje.getMensajeDescifrado();
+		  }
+		  try {
+		    nuevo = crearCifradoDescifrado(pLista.get(2), pLista.get(1),(String)pLista.get(3));
+		  } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+			  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			  e.printStackTrace();
+			}
+		  nuevo.descifrar(mensaje);
+		return mensaje.getMensajeDescifrado();	
   }
 
 }

@@ -1,5 +1,4 @@
 package conexion;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -18,14 +17,6 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import logicadeinstanciacion.ControladorCifradoDescifrado;
-import logicadeinstanciacion.SimpleCifradoFactory;
-import logicadenogocios.ICifrado;
-import logicadenogocios.Mensaje;
-
-
-
-
-
 @Path("/chatservice")
 /**
  * Clase ChatService que sirve para establecer
@@ -255,56 +246,22 @@ public class ChatService {
   
 	
   private String llamarCifrado(ArrayList<String> pLista) {	
-	ICifrado nuevo = null;
-	Mensaje mensaje = new Mensaje(pLista.get(0));	
-	SimpleCifradoFactory factoryNuevo = new SimpleCifradoFactory();
-	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(factoryNuevo);
-	if(pLista.get(4).equals("int")) {
-	  try {
-	    nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-	  } catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-		  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-		  e.printStackTrace();
-		}
-	 nuevo.cifrar(mensaje);
-	 return mensaje.getMensajeCifrado();
-	}	
-	try {
-	  nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), (String)pLista.get(3)); ;
-	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-		| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-		e.printStackTrace();
-	  }
-	nuevo.cifrar(mensaje);
-	return mensaje.getMensajeCifrado();	
+	  
+	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado();
+		
+   	return controlador.ejecutarCifrado(pLista);
+		
   }
 	
   
   private String llamarDescifrado(ArrayList<String> pLista)  {	
-	ICifrado nuevo = null;
-	Mensaje mensaje = new Mensaje(pLista.get(0));
-	mensaje.setMensajeCifrado(pLista.get(0));
+	  
+
+	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado();
+	  
+	return controlador.ejecutarDescifrado(pLista);
 	
-	SimpleCifradoFactory factoryNuevo = new SimpleCifradoFactory();
-	ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(factoryNuevo);
-	  if(pLista.get(4).equals("int")) {
-	    try {
-		  nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-			| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		  }
-		nuevo.descifrar(mensaje);
-		return mensaje.getMensajeDescifrado();
-	  }
-	  try {
-	    nuevo = controlador.crearCifradoDescifrado(pLista.get(2), pLista.get(1),(String)pLista.get(3));
-	  } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-		  | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-		  e.printStackTrace();
-		}
-	  nuevo.descifrar(mensaje);
-	return mensaje.getMensajeDescifrado();	
+	
   }
 
 		

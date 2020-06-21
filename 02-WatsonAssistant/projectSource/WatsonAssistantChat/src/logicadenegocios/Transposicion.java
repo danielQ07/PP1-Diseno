@@ -1,5 +1,5 @@
-package logicadenogocios;
-import logicadenogocios.ICifrado;
+package logicadenegocios;
+import logicadenegocios.ICifrado;
 
 
 

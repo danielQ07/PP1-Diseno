@@ -1,22 +1,20 @@
 package main;
 
-import logicadenogocios.Mensaje;
-import logicadenogocios.MensajeInverso;
-import logicadenogocios.PalabraInversa;
-import logicadenogocios.PorLlave;
-import logicadenogocios.SustitucionCesar;
-
-import logicadenogocios.Vigenere;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import conexion.ChatService;
 import logicadeinstanciacion.SimpleCifradoFactory;
-import logicadenogocios.CodificacionBinaria;
-import logicadenogocios.CodigoTelefonico;
-import logicadenogocios.ICifrado;
+import logicadenegocios.CodificacionBinaria;
+import logicadenegocios.CodigoTelefonico;
+import logicadenegocios.ICifrado;
+import logicadenegocios.Mensaje;
+import logicadenegocios.MensajeInverso;
+import logicadenegocios.PalabraInversa;
+import logicadenegocios.PorLlave;
+import logicadenegocios.SustitucionCesar;
+import logicadenegocios.Vigenere;
 
 
 public class AplPrueba {
