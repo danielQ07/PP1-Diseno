@@ -54,6 +54,7 @@ public class EnvioMensajes {
       message.setText(pMensaje);
       Transport.send(message);
     } catch(MessagingException e){
+        System.out.println(e);	
       }
   }
   
