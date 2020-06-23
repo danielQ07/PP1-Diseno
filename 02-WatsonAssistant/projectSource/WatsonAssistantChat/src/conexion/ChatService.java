@@ -56,6 +56,7 @@ public class ChatService {
 	@Produces("application/json")
   public Response getResponse(@QueryParam("conversationMsg") String conversationMsg, @QueryParam("conversationCtx") 
     String conversationCtx) throws InstantiationException, IllegalAccessException, ClassNotFoundException {	
+		
 	Assistant service = getService( conversationMsg, conversationCtx);
 	Context context = getContext(conversationCtx);		
 	InputData input = new InputData.Builder(conversationMsg).build();	
@@ -213,7 +214,7 @@ public class ChatService {
 	
   
   private boolean validarMensajeIncompleto(String terminado, String operacionCompleta) {
-	if(terminado != null && operacionCompleta == null) {
+	if(terminado != null && operacionCompleta == null) { 
 	  return true;
 	}
 	return false;
