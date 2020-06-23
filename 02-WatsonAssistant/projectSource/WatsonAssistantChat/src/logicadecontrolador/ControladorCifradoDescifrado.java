@@ -1,13 +1,11 @@
-package logicadeinstanciacion;
+package logicadecontrolador;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import logicadeinstanciacion.SimpleCifradoFactory;
 import logicadenegocios.ICifrado;
 import logicadenegocios.Mensaje;
 import util.EnvioMensajes;
-
-
-
 
 /**
  * Clase que sirve como contralador del
