@@ -12,8 +12,9 @@ public class PalabraInversa extends Transposicion {
   
   
   public Mensaje descifrar(Mensaje pMensaje) {
+	palabraInversa(pMensaje);
 	pMensaje.setMensajeDescifrado(pMensaje.getMensajeCifrado());  
-	return palabraInversa(pMensaje);  
+	return pMensaje;  
   }
   
   
