@@ -45,6 +45,7 @@ public class ControladorCifradoDescifrado {
   
   public String ejecutarCifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));	
+	System.out.println(pLista);
 	if(pLista.get(4).equals("int")) {
 	  try {
 	    strategy = crearCifradoDescifrado(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));

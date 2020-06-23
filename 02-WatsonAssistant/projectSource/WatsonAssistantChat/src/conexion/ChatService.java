@@ -73,7 +73,6 @@ public class ChatService {
 	String operacionCompleta = (String) context.get("operacionCompleta");
 	String terminado = (String) context.get("terminado");
 	String validarInstanciacion = (String) context.get("validarInstanciacion");
-	String correo = (String) context.get("correo");
 	
 	ArrayList<String> nuevo = new ArrayList<String>();
 	ArrayList<String> validacionFiltro = new ArrayList<String>();
@@ -105,11 +104,12 @@ public class ChatService {
 	   String numeroEncontrado = mensaje.replaceAll("\\D+","");	
 	   //añade al array para validar el tipo de sustitucion
 	   
-	   System.out.println("llave "+ llave);
-	   System.out.println("numeroEncontrado "+numeroEncontrado);
-	   
+	  
 	   validacionFiltro.add(llave);
 	   validacionFiltro.add(numeroEncontrado);	
+	   
+	   System.out.println(validacionFiltro);
+	   
 	   nuevo.add(filtarEncontradoTextoCompleto(validacionFiltro));//3
 	   nuevo.add(ingresarBandera(nuevo.get(3))); //4
 	   nuevo.add(prueba(assistantResponse.toString()));//5 correo
@@ -136,9 +136,9 @@ public class ChatService {
   }
 	
   private String filtarEncontradoTextoIncompleto(ArrayList<String> filtro) {
-    for(String posicion: filtro) {
+	  for(String posicion: filtro) {
 	  if(posicion != null) {
-	    return filtro.get(0);
+		return posicion;
 	  }
 	}
     return "sin valor";  
