@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import conexion.ChatService;
-import logicadeinstanciacion.ControladorCifradoDescifrado;
 import logicadeinstanciacion.SimpleCifradoFactory;
 import logicadenegocios.CodificacionBinaria;
 import logicadenegocios.CodigoTelefonico;
@@ -17,7 +16,7 @@ import logicadenegocios.PorLlave;
 import logicadenegocios.SustitucionCesar;
 import logicadenegocios.Vigenere;
 import util.EnvioMensajes;
-
+import logicadecontrolador.ControladorCifradoDescifrado;
 
 public class AplPrueba {
 	
