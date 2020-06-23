@@ -2,9 +2,6 @@ package logicadenegocios;
 import java.util.ArrayList;
 import util.ConversionAscii;
 
-
-
-
 /**
  * Clase SustitucionClave que contiene los atributos
  * y métodos necesarios.

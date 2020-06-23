@@ -1,7 +1,5 @@
 package logicadenegocios;
 
-
-
 /**
  * Clase Vigenere que contiene los atributos
  * y métodos necesarios.

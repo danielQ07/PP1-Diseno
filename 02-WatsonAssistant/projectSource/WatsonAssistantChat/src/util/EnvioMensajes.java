@@ -28,8 +28,7 @@ public class EnvioMensajes {
       props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
       
       //CREA UN AUTENTICADOR EN PARA PODER REALIZAAR LA VALIDACIÓN
-      Session session = Session.getInstance(props,new Authenticator() 
-      {
+      Session session = Session.getInstance(props,new Authenticator() {
           @Override
           public PasswordAuthentication getPasswordAuthentication() 
           {

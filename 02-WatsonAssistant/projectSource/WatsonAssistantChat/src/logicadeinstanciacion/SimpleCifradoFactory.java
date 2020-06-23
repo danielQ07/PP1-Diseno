@@ -31,7 +31,7 @@ public class SimpleCifradoFactory {
    * @throws SecurityException
    */
   public ICifrado crearCifradoDescifrado(String pType, String pSubType,Object pParametro) throws InstantiationException, 
-    IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {	
+      IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {	
 	ICifrado iCifrado;
 	if(pSubType == null) {
 	  iCifrado = (ICifrado) Class.forName("logicadenegocios."+pType).newInstance();
