@@ -6,9 +6,6 @@ import logicadenegocios.ICifrado;
 import logicadenegocios.Mensaje;
 import util.EnvioMensajes;
 
-
-
-
 /**
  * Clase que sirve como contralador del
  * cifrado y el descifrado.
