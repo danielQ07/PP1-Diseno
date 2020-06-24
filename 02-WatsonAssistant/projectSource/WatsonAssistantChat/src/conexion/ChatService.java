@@ -16,7 +16,6 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
-
 import logicadecontrolador.ControladorCifradoDescifrado;
 
 

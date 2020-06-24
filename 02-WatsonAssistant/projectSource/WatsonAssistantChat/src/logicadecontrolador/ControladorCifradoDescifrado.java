@@ -51,6 +51,13 @@ public class ControladorCifradoDescifrado {
 	}
   }
   
+  
+  /**
+   * Método que permite ejecutar 
+   * el cifrado.
+   * @param pLista
+   * @return
+   */
   public String ejecutarCifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));	
 	asignarStrategy(pLista.get(2), pLista.get(1),pLista.get(3));
@@ -61,6 +68,13 @@ public class ControladorCifradoDescifrado {
 	return mensaje.getMensajeCifrado(); 
   }
   
+  
+  /**
+   * Método que permite ejecutar 
+   * el descifrado.
+   * @param pLista
+   * @return
+   */
   public String ejecutarDescifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));
 	mensaje.setMensajeCifrado(pLista.get(0));
