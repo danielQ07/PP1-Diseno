@@ -90,8 +90,7 @@ public class ChatService {
 	  validacionFiltro.add(posiciones);
 	  
 	  nuevo.add(filtarEncontradoTextoIncompleto(validacionFiltro));//3
-	  nuevo.add(ingresarBandera(nuevo.get(3))); //4
-	  nuevo.add(prueba(assistantResponse.toString()));//5 correo
+	  nuevo.add(obtenerCorreo(assistantResponse.toString()));//4 correo
 	  
 	  ejecutarTipoOperacion(tipoOperacion,context,nuevo);	
 	
@@ -112,8 +111,7 @@ public class ChatService {
 	   System.out.println(validacionFiltro);
 	   
 	   nuevo.add(filtarEncontradoTextoCompleto(validacionFiltro));//3
-	   nuevo.add(ingresarBandera(nuevo.get(3))); //4
-	   nuevo.add(prueba(assistantResponse.toString()));//5 correo
+	   nuevo.add(obtenerCorreo(assistantResponse.toString()));//4 correo
 	   
 	   ejecutarTipoOperacion(tipoOperacion,context,nuevo);
 	 }	
@@ -125,7 +123,7 @@ public class ChatService {
   }
 	
 	
-  private String prueba(String response) {
+  private String obtenerCorreo(String response) {
 	  try {
 	    JSONObject obj = new JSONObject(response);
 	    String correo = obj.getJSONObject("context").getString("correo");
@@ -144,18 +142,7 @@ public class ChatService {
 	}
     return "sin valor";  
   }
-  
-	
-  private String ingresarBandera(String bandera) {
-	try {
-	  Integer numero = Integer.parseInt(bandera);
-	  return "int";
-	} catch(NumberFormatException e) {
-	    return "str";
-	  }
-  }
-  
-	
+
   private String filtarEncontradoTextoCompleto(ArrayList<String> filtro) {
     if(filtro.get(0) != null && !filtro.get(0).equals("")){
 	  String llaveExtraida = filtrarLlave(filtro.get(0));

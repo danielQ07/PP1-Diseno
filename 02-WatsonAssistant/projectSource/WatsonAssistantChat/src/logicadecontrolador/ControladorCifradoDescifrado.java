@@ -15,7 +15,7 @@ import util.EnvioMensajes;
  */
 public class ControladorCifradoDescifrado {
 	
-  private SimpleCifradoFactory fabrica = new SimpleCifradoFactory();
+  private SimpleCifradoFactory factory = new SimpleCifradoFactory();
   private ICifrado strategy;
   
   public ControladorCifradoDescifrado() {}
@@ -37,23 +37,13 @@ public class ControladorCifradoDescifrado {
   private ICifrado crearCifradoDescifrado(String pTipo, String subTipo, Object parametro) throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     ICifrado cifrado;
-    cifrado = fabrica.crearCifradoDescifrado(pTipo, subTipo, parametro);
+    cifrado = factory.crearCifradoDescifrado(pTipo, subTipo, parametro);
     return cifrado;
   }
   
-  private void asignarStrategy(String pTipo, String pSubTipo, int parametroNum) {
+  private void asignarStrategy(String pTipo, String pSubTipo, String parametro) {
 	  try {
-		strategy = crearCifradoDescifrado(pTipo, pSubTipo, parametroNum);
-	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-			| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-  }
-  
-  private void asignarStrategy(String pTipo, String pSubTipo, String parametroStr) {
-	  try {
-		strategy = crearCifradoDescifrado(pTipo, pSubTipo, parametroStr);
+		strategy = crearCifradoDescifrado(pTipo, pSubTipo, parametro);
 	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
 			| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 		// TODO Auto-generated catch block
@@ -63,48 +53,26 @@ public class ControladorCifradoDescifrado {
   
   public String ejecutarCifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));	
-    if(pLista.get(4).equals("int")) {
-		
-      asignarStrategy(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-
-      strategy.cifrar(mensaje);
-	  
-	  
-	  if(pLista.get(5) != null) {
+	asignarStrategy(pLista.get(2), pLista.get(1),pLista.get(3));
+	strategy.cifrar(mensaje);
+	if(pLista.get(5) != null) {
 		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeCifrado());
-	  }
-	  return mensaje.getMensajeCifrado();
-    }	
-    asignarStrategy(pLista.get(2), pLista.get(1), (String)pLista.get(3));
-    strategy.cifrar(mensaje);
-    if(pLista.get(5) != null) {
-	  enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeCifrado());
 	}
-    return mensaje.getMensajeCifrado();	
+	return mensaje.getMensajeCifrado(); 
   }
   
   public String ejecutarDescifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));
 	mensaje.setMensajeCifrado(pLista.get(0));
-	
-	if(pLista.get(4).equals("int")) {
-
-      asignarStrategy(pLista.get(2), pLista.get(1), Integer.parseInt(pLista.get(3)));
-      strategy.descifrar(mensaje);
-	  if(pLista.get(5) != null) {
-		enviarCorreo(pLista.get(5),"Mensaje descodificado: "+mensaje.getMensajeDescifrado());
-	  }
-	  return mensaje.getMensajeCifrado();
-    }	
-    asignarStrategy(pLista.get(2), pLista.get(1), (String)pLista.get(3));
+	asignarStrategy(pLista.get(2), pLista.get(1),pLista.get(3));
 	strategy.descifrar(mensaje);
 	if(pLista.get(5) != null) {
-		enviarCorreo(pLista.get(5),"Mensaje descodificado: "+mensaje.getMensajeDescifrado());
+		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeDescifrado());
 	}
 	return mensaje.getMensajeDescifrado();	
   }
   
-  public void enviarCorreo(String pCorreo,String pMensaje) {
+  private void enviarCorreo(String pCorreo,String pMensaje) {
     try {
 	  EnvioMensajes.enviarSms(pCorreo,pMensaje);
 	}catch(Exception e) {

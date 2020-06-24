@@ -48,7 +48,7 @@ public class AplPrueba {
 
 	  
     Mensaje mensaje2 = new Mensaje("tarea programada criptografia de datos jeje");
-    SustitucionCesar nuevaCesar = new SustitucionCesar(3);
+    SustitucionCesar nuevaCesar = new SustitucionCesar("3");
     System.out.println(mensaje2.getMensajeViejo());
     nuevaCesar.cifrar(mensaje2);
     System.out.println(mensaje2.getMensajeCifrado());
@@ -67,7 +67,7 @@ public class AplPrueba {
     
 
     Mensaje mensaje4 = new Mensaje("Tarea Programada criptografia de datos");
-    Vigenere nueva4 = new Vigenere(23);
+    Vigenere nueva4 = new Vigenere("23");
     System.out.println(mensaje4.getMensajeViejo());
     nueva4.cifrar(mensaje4);
     System.out.println(mensaje4.getMensajeCifrado());
@@ -87,13 +87,13 @@ public class AplPrueba {
    
 
     SimpleCifradoFactory nuevoo = new SimpleCifradoFactory();
-    ICifrado aa = nuevoo.crearCifradoDescifrado("SustitucionCesar", "", 3);
+    ICifrado aa = nuevoo.crearCifradoDescifrado("SustitucionCesar", "", "3");
 
     aa.cifrar(mensaje5);
     System.out.println(mensaje5.getMensajeCifrado());
  
     ControladorCifradoDescifrado controlador = new ControladorCifradoDescifrado(); 
-    controlador.enviarCorreo("danqp071298@gmail.com", "mensaje4");
+    //controlador.enviarCorreo("danqp071298@gmail.com", "mensaje4");
     
   }
  }	

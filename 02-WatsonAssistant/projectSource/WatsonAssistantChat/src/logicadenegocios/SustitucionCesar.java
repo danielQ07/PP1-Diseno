@@ -12,13 +12,13 @@ import util.ConversionAscii;
  */
 public class SustitucionCesar implements ICifrado {
 	
-  private Integer cantidadPosiciones;
+  private String cantidadPosiciones;
 	
   /**
    * Constructor de la clase.
    * @param pCantidadPosiciones
    */
-  public SustitucionCesar(Integer pCantidadPosiciones) {
+  public SustitucionCesar(String pCantidadPosiciones) {
 	this.cantidadPosiciones = pCantidadPosiciones;
   }
 	
@@ -33,7 +33,7 @@ public class SustitucionCesar implements ICifrado {
 	  if(letra == ' '){
 	  mensajeCifrado +=" ";
 	  } else{
-		  int posicionLetraAscii = ConversionAscii.letraAscii(letra)+cantidadPosiciones;	
+		  int posicionLetraAscii = ConversionAscii.letraAscii(letra)+Integer.parseInt(cantidadPosiciones);	
 		  posicionLetraAscii = validarAsciiLetra(letra,posicionLetraAscii);	
 		  char letraCifrada = ConversionAscii.asciiLetra(posicionLetraAscii);	
 		  mensajeCifrado += validarCaps(letra,letraCifrada);	
@@ -55,7 +55,7 @@ public class SustitucionCesar implements ICifrado {
 	  if(letra == ' '){
 	    mensajeDescifrado +=" ";
 	  } else{
-		  int numeroLetraAscii = ConversionAscii.letraAscii(letra)-cantidadPosiciones;	
+		  int numeroLetraAscii = ConversionAscii.letraAscii(letra)-Integer.parseInt(cantidadPosiciones);	
 		  numeroLetraAscii = validarLetraAscii(letra,numeroLetraAscii);		
 		  char letraDescifrada = ConversionAscii.asciiLetra(numeroLetraAscii);	
 		  mensajeDescifrado += validarCaps(letra,letraDescifrada);	
@@ -76,16 +76,16 @@ public class SustitucionCesar implements ICifrado {
   
   
   private int validarLetraAscii(char pLetra, int pNumeroLetraAscii) {
-    if(ConversionAscii.letraAscii(pLetra)-cantidadPosiciones < 65){
-	  return (pNumeroLetraAscii = ConversionAscii.letraAscii(pLetra)-cantidadPosiciones + 26);
+    if(ConversionAscii.letraAscii(pLetra)-Integer.parseInt(cantidadPosiciones) < 65){
+	  return (pNumeroLetraAscii = ConversionAscii.letraAscii(pLetra)-Integer.parseInt(cantidadPosiciones) + 26);
     }
 	return pNumeroLetraAscii;
   }
   
   
   private int validarAsciiLetra(char pLetra, int pNumeroAsciiLetra) {
-	if(ConversionAscii.letraAscii(pLetra)+cantidadPosiciones > 90){
-	  pNumeroAsciiLetra = ConversionAscii.letraAscii(pLetra)+cantidadPosiciones - 26;
+	if(ConversionAscii.letraAscii(pLetra)+Integer.parseInt(cantidadPosiciones) > 90){
+	  pNumeroAsciiLetra = ConversionAscii.letraAscii(pLetra)+Integer.parseInt(cantidadPosiciones) - 26;
 	}
 	return pNumeroAsciiLetra;
   }

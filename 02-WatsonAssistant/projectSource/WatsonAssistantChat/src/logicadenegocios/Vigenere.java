@@ -8,9 +8,9 @@ package logicadenegocios;
  */
 public class Vigenere extends SustitucionClave {
 	
-  private Integer cifra;
+  private String cifra;
   
-  public Vigenere(Integer pCifra) {
+  public Vigenere(String pCifra) {
     this.cifra = pCifra;
   }
   
@@ -92,11 +92,11 @@ public class Vigenere extends SustitucionClave {
   private int getIndexLetraDesencriptada(int pPosicionCifra,int pIndexLetraActual) {	
 	int indexLetraDesencriptada = 0;	
 	if(pPosicionCifra == 1) {		
-	  indexLetraDesencriptada = pIndexLetraActual -cifra/10;
+	  indexLetraDesencriptada = pIndexLetraActual -Integer.parseInt(cifra)/10;
 	  pPosicionCifra = 2;
 	  return indexLetraDesencriptada;	
 	}	
-	indexLetraDesencriptada =  pIndexLetraActual - cifra%10; 
+	indexLetraDesencriptada =  pIndexLetraActual - Integer.parseInt(cifra)%10; 
 	return indexLetraDesencriptada;
   }
   
@@ -104,11 +104,11 @@ public class Vigenere extends SustitucionClave {
   private int getIndexLetraEncriptada(int pPosicionCifra,int pIndexLetraActual) {	
 	int indexLetraEncriptada = 0;	
 	if(pPosicionCifra == 1) {		
-	  indexLetraEncriptada = cifra/10 + pIndexLetraActual;
+	  indexLetraEncriptada = Integer.parseInt(cifra)/10 + pIndexLetraActual;
 	  pPosicionCifra = 2;
 	  return indexLetraEncriptada;	
 	}	
-	indexLetraEncriptada = cifra%10 + pIndexLetraActual; 
+	indexLetraEncriptada = Integer.parseInt(cifra)%10 + pIndexLetraActual; 
 	return indexLetraEncriptada;
 	
   }
