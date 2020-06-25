@@ -62,8 +62,8 @@ public class ControladorCifradoDescifrado {
 	Mensaje mensaje = new Mensaje(pLista.get(0));	
 	asignarStrategy(pLista.get(2), pLista.get(1),pLista.get(3));
 	strategy.cifrar(mensaje);
-	if(pLista.get(5) != null) {
-		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeCifrado());
+	if(pLista.get(4) != null) {
+		enviarCorreo(pLista.get(4),"Mensaje codificado: "+mensaje.getMensajeCifrado());
 	}
 	return mensaje.getMensajeCifrado(); 
   }
@@ -78,11 +78,13 @@ public class ControladorCifradoDescifrado {
   public String ejecutarDescifrado(ArrayList<String> pLista) {
 	Mensaje mensaje = new Mensaje(pLista.get(0));
 	mensaje.setMensajeCifrado(pLista.get(0));
+	
 	asignarStrategy(pLista.get(2), pLista.get(1),pLista.get(3));
 	strategy.descifrar(mensaje);
-	if(pLista.get(5) != null) {
-		enviarCorreo(pLista.get(5),"Mensaje codificado: "+mensaje.getMensajeDescifrado());
+	if(pLista.get(4) != null) {
+		enviarCorreo(pLista.get(4),"Mensaje descodificado: "+mensaje.getMensajeDescifrado());
 	}
+	System.out.print(mensaje.getMensajeDescifrado());
 	return mensaje.getMensajeDescifrado();	
   }
   
