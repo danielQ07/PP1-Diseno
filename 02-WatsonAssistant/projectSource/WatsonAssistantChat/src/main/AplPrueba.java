@@ -23,14 +23,6 @@ public class AplPrueba {
   public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 	  
 
-	  String var = "KEVIN PLAYAZO";
-	 Matcher matcher = Pattern.compile(" \"(.*?)\"").matcher("\" \"tango\"\"");
-	 if (matcher.find()){
-		 System.out.println(matcher.group(1));
-	 }
-	  
-
-
     Mensaje mensaje1 = new Mensaje("nohtyP se erbmon im aloH") ;
     MensajeInverso mensajeinverso = new MensajeInverso();
     mensajeinverso.descifrar(mensaje1);
@@ -44,7 +36,6 @@ public class AplPrueba {
 
     System.out.println(mensaje1.getMensajeCifrado());
 
-    
 
 	  
     Mensaje mensaje2 = new Mensaje("tarea programada criptografia de datos jeje");
